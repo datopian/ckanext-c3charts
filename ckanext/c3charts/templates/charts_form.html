@@ -1,0 +1,36 @@
+{% resource 'c3charts/form' %}
+{% import 'macros/form.html' as form %}
+
+<div data-module="c3charts_form"
+     data-module-controls="{{ h.dump_json(resource_view) }}"
+     id="c3controls"
+     class="c3controls">
+
+    {% block form %}
+
+        {{ form.select('chart_type', label=_('Chart Type'), options=chart_types,
+            selected=resource_view['chart_type'], is_required=True) }}
+
+        <label class="control-label" id="key_fields_label">
+            <span title="This field is required" class="control-required">*</span> Data keys
+        </label>
+        <div class="c3-select-container" id="key_fields_container">
+            {% for item in fields %}
+                {{ form.checkbox('key_fields', id=['key_fields_', item.value]|join, label=item.value,
+                            value=item.value, checked=False, classes=['c3select']) }}
+            {% endfor %}
+        </div>
+
+        <label class="control-label" id="x_fields_label">
+            <span title="This field is required" class="control-required">*</span> Time keys
+        </label>
+        <div class="c3-select-container" id="x_fields_container">
+            {% for item in fields %}
+                {{ form.checkbox('x_fields', id=['x_fields_', item.value]|join, label=item.value,
+                            value=item.value, checked=False, classes=['c3select']) }}
+            {% endfor %}
+        </div>
+
+    {% endblock %}
+
+</div>

@@ -1,0 +1,13 @@
+.c3-legend-item {
+    font-size: 15px;
+    margin-top: 0px;
+}
+
+.c3 svg {
+    font-size: 13px;
+}
+
+#chart2 .c3-line {
+    stroke-width: 3px;
+    stroke-linecap: round;
+}
