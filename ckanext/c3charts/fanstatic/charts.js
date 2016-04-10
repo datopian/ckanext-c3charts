@@ -19,30 +19,37 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                 data = query.hits;
 
             if (resourceView.key_fields) {
-                var chart = c3.generate(chartBuilder(elementId, resourceView, data));
+                c3.generate(chartBuilder(elementId, resourceView, data));
             } else {
                 $(elementId).append("No keys defined");
             }
         });
-
     }
 
     function chartBuilder(elementId, resourceView, data) {
         var i, j,
-            chartType = '',
-            key_fields = resourceView.key_fields,
-            x_fields = resourceView.x_fields,
+            chart_type = resourceView.chart_type,
             x_list = [],
-            show_legends = resourceView.show_legends;
+            key_fields = resourceView.key_fields,
+            x_fields = resourceView.x_fields;
 
-        if (resourceView.chart_type === 'Pie Chart') chartType = 'pie';
-        if (resourceView.chart_type === 'Donut Chart') chartType = 'donut';
-        if (resourceView.chart_type === 'Bar Chart') chartType = 'bar';
-        if (resourceView.chart_type === 'Line Chart') chartType = 'line';
-        if (resourceView.chart_type === 'Spline Chart') chartType = 'spline';
+        if (chart_type === 'Pie Chart') chart_type = 'pie';
+        else if (chart_type === 'Donut Chart') chart_type = 'donut';
+        else if (chart_type === 'Bar Chart') chart_type = 'bar';
+        else if (chart_type === 'Stacked Bar Chart') chart_type = 'bar';
+        else if (chart_type === 'Line Chart') chart_type = 'line';
+        else if (chart_type === 'Spline Chart') chart_type = 'spline';
 
         if (Array.isArray(x_fields)) {
-
+            for (i=0; i < data.length; i++){
+                for (j=0; j < x_fields.length; j++) {
+                    if (!x_list[i]) {
+                        x_list[i] = data[i][x_fields[j]];
+                    } else {
+                        x_list[i] += '-' + data[i][x_fields[j]];
+                    }
+                }
+            }
         } else {
             for (i in data) {
                 x_list.push(data[i][x_fields]);
@@ -56,7 +63,8 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                 keys: {
                     value: key_fields
                 },
-                type: chartType
+                type: chart_type,
+                groups: resourceView.chart_type != 'Stacked Bar Chart' || [key_fields]
             },
             padding: {
                 bottom: 16
@@ -64,13 +72,16 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
             axis: {
                 x: {
                     tick: {
-                        culling: true,
+                        culling: false,
                         fit: false,
                         centered: true
                     },
                     type: 'category',
                     categories: x_list
                 }
+            },
+            color: {
+                pattern: resourceView.color_scheme.split(',')
             }
         }
     }
@@ -81,7 +92,6 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
             sort: [],
             size: 500
         };
-
         return query;
     }
 

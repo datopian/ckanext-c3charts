@@ -1,6 +1,6 @@
-.c3-select-container {
+.c3charts-form-split-container {
     padding: 0;
-    padding-top: 15px;
+    padding-top: 0px;
     margin: 0;
     list-style: none;
     -ms-box-orient: horizontal;
@@ -14,17 +14,28 @@
     flex-wrap: wrap;
 }
 
+.c3charts-form-split-container .controls {
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.c3charts-form-split-container .control-label {
+    margin-left: 20px;
+    text-align: left;
+}
+
 .c3select {
     padding-left: 0px;
     margin-left: 0px;
     width: 240px;
 }
 
-.c3-select-container .controls {
-    margin-left: 20px;
-    margin-right: 10px;
+.c3input {
+    padding-left: 0px;
+    margin-left: 0px;
+    width: 240px;
 }
 
-.c3-select-container input[type="checkbox"] {
+.c3charts-form-split-container input[type="checkbox"] {
     top: 3px;
 }

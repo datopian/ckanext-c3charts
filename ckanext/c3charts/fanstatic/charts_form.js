@@ -4,9 +4,11 @@ ckan.module('c3charts_form', function ($, _) {
     function appropriateControls(chartType) {
         if (chartType == 'Pie Chart' ||
             chartType == 'Donut Chart') {
+            $('#x_fields_help').hide();
             $('#x_fields_label').hide();
             $('#x_fields_container').hide();
         } else {
+            $('#x_fields_help').show();
             $('#x_fields_label').show();
             $('#x_fields_container').show();
         }
@@ -39,6 +41,12 @@ ckan.module('c3charts_form', function ($, _) {
             } else {
                 $('[id=\'x_fields_' + x_fields + '\']').prop('checked', 'True');
             }
+
+            var colorSchemes = {pallete1: ['#9999FF', '#B579F2'],
+                                pallete2: ['#8888AA', '#888811']};
+            $.each(colorSchemes, function () {
+                $('#colors_select').append($("<option><div style='background: colorSchemes[value][0]'>AA</div></option>"));
+            });
         }
     }
 });

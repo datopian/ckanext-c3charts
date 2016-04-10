@@ -7,6 +7,7 @@ not_empty = plugins.toolkit.get_validator('not_empty')
 ignore_missing = plugins.toolkit.get_validator('ignore_missing')
 ignore_empty = plugins.toolkit.get_validator('ignore_empty')
 
+
 class ChartsPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer, inherit=True)
     plugins.implements(plugins.IResourceView, inherit=True)
@@ -21,9 +22,9 @@ class ChartsPlugin(plugins.SingletonPlugin):
     def info(self):
         schema = {
             'chart_type': [not_empty],
-            'key_fields': [ignore_missing],
+            'key_fields': [not_empty],
             'x_fields': [ignore_missing],
-            'show_legend': [ignore_missing]
+            'color_scheme': [not_empty]
         }
 
         return {'name': 'Chart builder',
@@ -46,10 +47,26 @@ class ChartsPlugin(plugins.SingletonPlugin):
                 'resource_view': resource_view,
                 'fields': fields,
                 'chart_types': [{'value': 'Bar Chart'},
+                                {'value': 'Stacked Bar Chart'},
                                 {'value': 'Donut Chart'},
                                 {'value': 'Line Chart'},
                                 {'value': 'Pie Chart'},
-                                {'value': 'Spline Chart'}]
+                                {'value': 'Spline Chart'}],
+                'color_schemes': [{'value': '#9999FF, #B579F2, #8888AA, #888811, #888811, '
+                                            '#558811, #5F3F7F, #3D3D4C, #552299, #2B2B2B',
+                                   'text': 'Kenya'},
+                                  {'value': '#DDBBAA, #79E6F2, #88AA99, #00A864, #228899, '
+                                            '#3F797F, #775555, #118855, #008751, #3D4C46',
+                                   'text': 'Nigeria'},
+                                  {'value': '#ADC0D8, #79AFF2, #8899AA, #0EAAB2, #00A0A8, '
+                                            '#776655, #118888, #885511, #3F5C7F, #225599',
+                                   'text': 'Uganda'},
+                                  {'value': '#ADB1D8, #8899AA, #7983F2, #777752, #887711, '
+                                            '#0070C0, #0062A8, #3F457F, #115588, #3D464C',
+                                   'text': 'Tanzania'},
+                                  {'value': '#AA9988, #A88600, #779922, #6C7F3F, #887711, '
+                                            '#555577, #665500, #665100, #4C493D, #2B2B2V',
+                                   'text': 'Myanmar'}]
                 }
 
     def view_template(self, context, data_dict):
