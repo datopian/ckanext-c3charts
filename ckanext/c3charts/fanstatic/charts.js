@@ -19,6 +19,7 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                 data = query.hits;
 
             if (resourceView.key_fields) {
+                console.log(chartBuilder(elementId, resourceView, data));
                 c3.generate(chartBuilder(elementId, resourceView, data));
             } else {
                 $(elementId).append("No keys defined");
@@ -33,12 +34,18 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
             key_fields = resourceView.key_fields,
             x_fields = resourceView.x_fields;
 
+        console.log(data);
+
         if (chart_type === 'Pie Chart') chart_type = 'pie';
         else if (chart_type === 'Donut Chart') chart_type = 'donut';
         else if (chart_type === 'Bar Chart') chart_type = 'bar';
         else if (chart_type === 'Stacked Bar Chart') chart_type = 'bar';
         else if (chart_type === 'Line Chart') chart_type = 'line';
         else if (chart_type === 'Spline Chart') chart_type = 'spline';
+
+        if (! Array.isArray(key_fields)) {
+            key_fields = [key_fields];
+        }
 
         if (Array.isArray(x_fields)) {
             for (i=0; i < data.length; i++){
