@@ -181,6 +181,7 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                 break;
             case 'substract':
                 tableNumber = data[datalength - 1][keyField] - data[datalength - 2][keyField];
+                tableNumber = Math.round((tableNumber / datalength) * 10) / 10;
                 if (tableNumber > 0) {
                     triangle = $('<img src="/triangle-up.png" width="45px" style="padding-left: 24px; padding-bottom:35px" />');
                 } else if (tableNumber < 0) {
@@ -191,6 +192,7 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                 break;
             case 'last':
                 tableNumber = data[datalength - 1][keyField];
+                tableNumber = Math.round((tableNumber / datalength) * 10) / 10;
                 break;
         }
 
