@@ -24,7 +24,11 @@ class ChartsPlugin(plugins.SingletonPlugin):
             'chart_type': [not_empty],
             'key_fields': [not_empty],
             'x_fields': [ignore_missing],
-            'color_scheme': [not_empty]
+            'color_scheme': [not_empty],
+            'header': [ignore_missing],
+            'measure_unit': [ignore_missing],
+            'text_chart_number_action': [not_empty],
+            'legend_position': [not_empty]
         }
 
         return {'name': 'Chart builder',
@@ -39,7 +43,6 @@ class ChartsPlugin(plugins.SingletonPlugin):
     def setup_template_variables(self, context, data_dict):
         resource = data_dict['resource']
         resource_view = data_dict['resource_view']
-        resource_view['show_legends'] = bool(resource_view.get('show_legends'))
 
         fields = _get_fields_without_id(resource)
 
@@ -51,7 +54,9 @@ class ChartsPlugin(plugins.SingletonPlugin):
                                 {'value': 'Donut Chart'},
                                 {'value': 'Line Chart'},
                                 {'value': 'Pie Chart'},
-                                {'value': 'Spline Chart'}],
+                                {'value': 'Spline Chart'},
+                                {'value': 'Table Chart'},
+                                {'value': 'Simple Chart'}],
                 'color_schemes': [{'value': '#9999FF, #B579F2, #8888AA, #888811, #888811, '
                                             '#558811, #5F3F7F, #3D3D4C, #552299, #2B2B2B',
                                    'text': 'Kenya'},
@@ -66,7 +71,15 @@ class ChartsPlugin(plugins.SingletonPlugin):
                                    'text': 'Tanzania'},
                                   {'value': '#AA9988, #A88600, #779922, #6C7F3F, #887711, '
                                             '#555577, #665500, #665100, #4C493D, #2B2B2V',
-                                   'text': 'Myanmar'}]
+                                   'text': 'Myanmar'}],
+                'text_chart_number_actions': [{'value': 'substract',
+                                               'text': 'Substract last two entries'},
+                                              {'value': 'average',
+                                               'text': 'Average'},
+                                              {'value': 'last',
+                                               'text': 'Show last'}],
+                'legend_positions': [{'text': 'Right', 'value': 'right'},
+                                     {'text': 'Bottom', 'value': 'bottom'}]
                 }
 
     def view_template(self, context, data_dict):

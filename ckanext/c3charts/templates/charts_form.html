@@ -14,6 +14,9 @@
         {{ form.select('color_scheme', label=_('Color Pattern'), options=color_schemes,
             selected=resource_view['color_scheme'], is_required=True) }}
 
+        {{ form.select('legend_position', label=_('Legend position'), options=legend_positions,
+            selected=resource_view['legend_position'], is_required=True) }}
+
         <div class="alert alert-info">
             <p>Select the keys for the data that needs to be charted.</p>
         </div>
@@ -38,6 +41,16 @@
                 {{ form.checkbox('x_fields', id=['x_fields_', item.value]|join, label=item.value,
                             value=item.value, checked=False, classes=['c3select']) }}
             {% endfor %}
+        </div>
+        {{ form.input('measure_unit', label=_('Append Unit'), value=resource_view['measure_unit']) }}
+
+        <div id="table-chart">
+            <div class="alert alert-info">
+                <p>Customize the look of the table chart.</p>
+            </div>
+            {{ form.textarea('header', id='header', value=resource_view['header'], label='Header text') }}
+            {{ form.select('text_chart_number_action', label=_('Number value'), options=text_chart_number_actions,
+                selected=resource_view['text_chart_number_action'], is_required=True) }}
         </div>
 
     {% endblock %}

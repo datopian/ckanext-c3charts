@@ -7,10 +7,15 @@ ckan.module('c3charts_form', function ($, _) {
             $('#x_fields_help').hide();
             $('#x_fields_label').hide();
             $('#x_fields_container').hide();
+            $('#table-chart').hide();
+        } else if (chartType == 'Table Chart' ||
+                   chartType == 'Simple Chart') {
+            $('#table-chart').show();
         } else {
             $('#x_fields_help').show();
             $('#x_fields_label').show();
             $('#x_fields_container').show();
+            $('#table-chart').hide();
         }
     }
 
