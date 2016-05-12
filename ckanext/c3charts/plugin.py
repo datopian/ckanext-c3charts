@@ -28,7 +28,8 @@ class ChartsPlugin(plugins.SingletonPlugin):
             'header': [ignore_missing],
             'measure_unit': [ignore_missing],
             'text_chart_number_action': [not_empty],
-            'legend_position': [not_empty]
+            'legend_position': [not_empty],
+            'rotated': [ignore_missing]
         }
 
         return {'name': 'Chart builder',

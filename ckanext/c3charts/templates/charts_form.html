@@ -17,6 +17,9 @@
         {{ form.select('legend_position', label=_('Legend position'), options=legend_positions,
             selected=resource_view['legend_position'], is_required=True) }}
 
+        {{ form.checkbox('rotated', id='rotated', value='True', label=_('Rotate axis'),
+                            checked=resource_view['rotated'] is defined) }}
+
         <div class="alert alert-info">
             <p>Select the keys for the data that needs to be charted.</p>
         </div>

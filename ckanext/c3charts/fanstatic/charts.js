@@ -81,7 +81,7 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                 x_list.push(data[i][x_fields]);
             }
         }
-        
+        console.log(resourceView);
         return {
             bindto: elementId,
             data: {
@@ -113,7 +113,8 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                             return d
                         }
                     }
-                }
+                },
+                rotated: !! resourceView.rotated
             },
             color: {
                 pattern: resourceView.color_scheme.split(',')
