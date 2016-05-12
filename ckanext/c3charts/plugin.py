@@ -58,8 +58,8 @@ class ChartsPlugin(plugins.SingletonPlugin):
                                 {'value': 'Spline Chart'},
                                 {'value': 'Table Chart'},
                                 {'value': 'Simple Chart'}],
-                'color_schemes': [{'value': '#9999FF, #B579F2, #8888AA, #888811, #888811, '
-                                            '#558811, #5F3F7F, #3D3D4C, #552299, #2B2B2B',
+                'color_schemes': [{'value': '#B80000, #995522, #556677, #118888, #115588, '
+                                            '#4C3D3D, #2B2B2B, #660000, #221100',
                                    'text': 'Kenya'},
                                   {'value': '#DDBBAA, #79E6F2, #88AA99, #00A864, #228899, '
                                             '#3F797F, #775555, #118855, #008751, #3D4C46',
