@@ -39,7 +39,10 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
             chart_type = resourceView.chart_type,
             x_list = [],
             key_fields = resourceView.key_fields,
-            x_fields = resourceView.x_fields;
+            x_fields = resourceView.x_fields,
+            legend = (resourceView.legend == 'hide') ? {show: false} : {position: resourceView.legend};
+
+        console.log(legend);
 
         switch (chart_type) {
             case 'Pie Chart':
@@ -82,6 +85,8 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
             }
         }
 
+        console.log(resourceView);
+
         return {
             bindto: elementId,
             data: {
@@ -90,7 +95,8 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                     value: key_fields
                 },
                 type: chart_type,
-                groups: resourceView.chart_type != 'Stacked Bar Chart' || [key_fields]
+                groups: resourceView.chart_type != 'Stacked Bar Chart' || [key_fields],
+                labels: !! resourceView.data_labels
             },
             padding: {
                 bottom: 16
@@ -119,9 +125,15 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
             color: {
                 pattern: resourceView.color_scheme.split(',')
             },
-            legend: {
-                position: resourceView.legend_position
-            }
+            grid: {
+                x: {
+                    show: !! resourceView.x_grid
+                },
+                y: {
+                    show: !! resourceView.y_grid
+                }
+            },
+            legend: legend
         }
     }
 

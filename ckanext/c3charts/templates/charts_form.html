@@ -14,11 +14,20 @@
         {{ form.select('color_scheme', label=_('Color Pattern'), options=color_schemes,
             selected=resource_view['color_scheme'], is_required=True) }}
 
-        {{ form.select('legend_position', label=_('Legend position'), options=legend_positions,
-            selected=resource_view['legend_position'], is_required=True) }}
+        {{ form.select('legend', label=_('Legend'), options=legend_options,
+            selected=resource_view['legend'], is_required=True) }}
 
         {{ form.checkbox('rotated', id='rotated', value='True', label=_('Rotate axis'),
                             checked=resource_view['rotated'] is defined) }}
+
+        {{ form.checkbox('data_labels', id='data_labels', value='True', label=_('Show data labels'),
+                            checked=resource_view['data_labels'] is defined) }}
+
+        {{ form.checkbox('x_grid', id='x_grid', value='True', label=_('Show grid on x axis'),
+                            checked=resource_view['x_grid'] is defined) }}
+
+        {{ form.checkbox('y_grid', id='y_grid', value='True', label=_('Show grid on y axis'),
+                            checked=resource_view['y_grid'] is defined) }}
 
         <div class="alert alert-info">
             <p>Select the keys for the data that needs to be charted.</p>

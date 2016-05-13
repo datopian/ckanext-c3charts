@@ -28,8 +28,11 @@ class ChartsPlugin(plugins.SingletonPlugin):
             'header': [ignore_missing],
             'measure_unit': [ignore_missing],
             'text_chart_number_action': [not_empty],
-            'legend_position': [not_empty],
-            'rotated': [ignore_missing]
+            'legend': [not_empty],
+            'rotated': [ignore_missing],
+            'data_labels': [ignore_missing],
+            'x_grid': [ignore_missing],
+            'y_grid': [ignore_missing]
         }
 
         return {'name': 'Chart builder',
@@ -79,7 +82,8 @@ class ChartsPlugin(plugins.SingletonPlugin):
                                                'text': 'Average'},
                                               {'value': 'last',
                                                'text': 'Show last'}],
-                'legend_positions': [{'text': 'Right', 'value': 'right'},
+                'legend_options': [{'text': 'Hide', 'value': 'hide'},
+                                     {'text': 'Right', 'value': 'right'},
                                      {'text': 'Bottom', 'value': 'bottom'}]
                 }
 
