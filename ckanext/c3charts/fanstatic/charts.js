@@ -81,7 +81,7 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                 x_list.push(data[i][x_fields]);
             }
         }
-        console.log(resourceView);
+
         return {
             bindto: elementId,
             data: {
@@ -148,6 +148,7 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                 .addClass('table')
                 .addClass('table-bordered')
                 .addClass('table-striped')
+                .addClass('chart-table')
                 .append(
                     $('<thead />')
                         .append(
@@ -206,7 +207,8 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
 
         var textChart = $('<div class="textChart" />')
             .append(
-                $('<h1 />')
+                $('<div />')
+                    .addClass('text-chart-h')
                     .text(header)
             )
             .append(
@@ -222,7 +224,9 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
             textChart.append(buildTable(resourceView, data));
         }
 
-        $(elementId).append(textChart);
+        $(elementId)
+            .addClass('c3chart')
+            .append(textChart);
     }
 
     function generateQueryParams(resource, params) {
