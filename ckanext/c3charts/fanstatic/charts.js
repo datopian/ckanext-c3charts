@@ -41,9 +41,7 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
             key_fields = resourceView.key_fields,
             x_fields = resourceView.x_fields,
             legend = (resourceView.legend == 'hide') ? {show: false} : {position: resourceView.legend};
-
-        console.log(legend);
-
+        
         switch (chart_type) {
             case 'Pie Chart':
                 chart_type = 'pie';
@@ -86,6 +84,7 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
         }
 
         console.log(resourceView);
+        console.log(data)
 
         return {
             bindto: elementId,
@@ -103,20 +102,25 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
             },
             axis: {
                 x: {
+                    type: 'category',
+                    categories: x_list,
                     tick: {
                         culling: false,
-                        fit: false,
-                        centered: true
-                    },
-                    type: 'category',
-                    categories: x_list
+                        fit: true,
+                        centered: true,
+                        format: function (d) {
+                            var measureUnit = resourceView.measure_unit_x;
+                            if (measureUnit) return x_list[d] + measureUnit;
+                            return x_list[d];
+                        }
+                    }
                 },
                 y: {
                     tick: {
                         format: function(d) {
-                            var measureUnit = resourceView.measure_unit;
+                            var measureUnit = resourceView.measure_unit_y;
                             if (measureUnit) return d + measureUnit;
-                            return d
+                            return d;
                         }
                     }
                 },

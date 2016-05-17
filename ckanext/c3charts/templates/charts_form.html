@@ -41,7 +41,7 @@
                             value=item.value, checked=False, classes=['c3select']) }}
             {% endfor %}
         </div>
-        {{ form.input('measure_unit', label=_('Append Unit'), value=resource_view['measure_unit']) }}
+        {{ form.input('measure_unit_y', label=_('Append Unit'), value=resource_view['measure_unit_y']) }}
 
         <div class="alert alert-info" id="x_fields_help">
             <p>Select the keys for the progression (x-axis) of the data values.</p>
@@ -55,6 +55,7 @@
                             value=item.value, checked=False, classes=['c3select']) }}
             {% endfor %}
         </div>
+        {{ form.input('measure_unit_x', label=_('Append Unit'), value=resource_view['measure_unit_x']) }}
 
         <div id="table-chart">
             <div class="alert alert-info">
