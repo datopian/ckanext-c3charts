@@ -40,7 +40,10 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
             x_list = [],
             key_fields = resourceView.key_fields,
             x_fields = resourceView.x_fields,
-            legend = (resourceView.legend == 'hide') ? {show: false} : {position: resourceView.legend};
+            legend = (resourceView.legend == 'hide') ? {show: false} : {position: resourceView.legend,
+                                                                        item: {
+                                                                            onclick: function(id) {}
+                                                                        }};
         
         switch (chart_type) {
             case 'Pie Chart':
