@@ -33,7 +33,8 @@ class ChartsPlugin(plugins.SingletonPlugin):
             'rotated': [ignore_missing],
             'data_labels': [ignore_missing],
             'x_grid': [ignore_missing],
-            'y_grid': [ignore_missing]
+            'y_grid': [ignore_missing],
+            'remap_key': [ignore_missing]
         }
 
         return {'name': 'Chart builder',
@@ -50,10 +51,14 @@ class ChartsPlugin(plugins.SingletonPlugin):
         resource_view = data_dict['resource_view']
 
         fields = _get_fields_without_id(resource)
+        remap_keys = list(fields)
+        remap_keys.insert(0, {'value': ''})
+        logger.debug(remap_keys)
 
         return {'resource': resource,
                 'resource_view': resource_view,
                 'fields': fields,
+                'remap_keys': remap_keys,
                 'chart_types': [{'value': 'Bar Chart'},
                                 {'value': 'Stacked Bar Chart'},
                                 {'value': 'Donut Chart'},

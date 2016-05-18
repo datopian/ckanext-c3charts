@@ -86,8 +86,23 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
             }
         }
 
+        console.log(resourceView.remap_key)
+        if (resourceView.remap_key != '') {
+            var remap_data = [],
+                remap_key_fields = [],
+                tmp_object = {},
+                remap_field = resourceView.remap_key;
+            for (i in data) {
+                tmp_object[data[i][remap_field]] = data[i][key_fields];
+                remap_data.push(tmp_object);
+                remap_key_fields.push(data[i][remap_field]);
+            }
+            data = remap_data;
+            key_fields = remap_key_fields;
+        }
+
         console.log(resourceView);
-        console.log(data)
+        console.log(data);
 
         return {
             bindto: elementId,

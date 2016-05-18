@@ -4,18 +4,18 @@ ckan.module('c3charts_form', function ($, _) {
     function appropriateControls(chartType) {
         if (chartType == 'Pie Chart' ||
             chartType == 'Donut Chart') {
-            $('#x_fields_help').hide();
-            $('#x_fields_label').hide();
-            $('#x_fields_container').hide();
+            $('#x-fields').hide();
             $('#table-chart').hide();
+            $('#remap-key').show();
         } else if (chartType == 'Table Chart' ||
                    chartType == 'Simple Chart') {
+            $('#x-fields').show();
             $('#table-chart').show();
+            $('#remap-key').hide();
         } else {
-            $('#x_fields_help').show();
-            $('#x_fields_label').show();
-            $('#x_fields_container').show();
+            $('#x-fields').show();
             $('#table-chart').hide();
+            $('#remap-key').hide();
         }
     }
 

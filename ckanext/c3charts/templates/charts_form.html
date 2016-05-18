@@ -41,22 +41,27 @@
                             value=item.value, checked=False, classes=['c3select']) }}
             {% endfor %}
         </div>
+        <div id="remap-key">
+            {{ form.select('remap_key', label=_('Remap'), options=remap_keys,
+            selected=resource_view['remap_key'], is_required=False) }}
+        </div>
         {{ form.input('measure_unit_y', label=_('Append Unit'), value=resource_view['measure_unit_y']) }}
 
-        <div class="alert alert-info" id="x_fields_help">
-            <p>Select the keys for the progression (x-axis) of the data values.</p>
-        </div>
-        <label class="control-label" id="x_fields_label">
-            <span title="This field is required" class="control-required">*</span> Progress keys
-        </label>
-        <div class="c3charts-form-split-container" id="x_fields_container">
-            {% for item in fields %}
-                {{ form.checkbox('x_fields', id=['x_fields_', item.value]|join, label=item.value,
+        <div id="x-fields">
+            <div class="alert alert-info" id="x_fields_help">
+                <p>Select the keys for the progression (x-axis) of the data values.</p>
+            </div>
+            <label class="control-label" id="x_fields_label">
+                <span title="This field is required" class="control-required">*</span> Progress keys
+            </label>
+            <div class="c3charts-form-split-container" id="x_fields_container">
+                {% for item in fields %}
+                    {{ form.checkbox('x_fields', id=['x_fields_', item.value]|join, label=item.value,
                             value=item.value, checked=False, classes=['c3select']) }}
-            {% endfor %}
+                {% endfor %}
+            </div>
+            {{ form.input('measure_unit_x', label=_('Append Unit'), value=resource_view['measure_unit_x']) }}
         </div>
-        {{ form.input('measure_unit_x', label=_('Append Unit'), value=resource_view['measure_unit_x']) }}
-
         <div id="table-chart">
             <div class="alert alert-info">
                 <p>Customize the look of the table chart.</p>
