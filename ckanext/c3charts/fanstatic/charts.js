@@ -242,11 +242,6 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
         var textChart = $('<div class="textChart" />')
             .append(
                 $('<div />')
-                    .addClass('text-chart-h')
-                    .text(header)
-            )
-            .append(
-                $('<div />')
                     .addClass('text-center')
                     .addClass('table-number')
                     .text(tableNumber)
