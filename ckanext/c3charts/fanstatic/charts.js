@@ -47,6 +47,8 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                                                                         
         var labelX = resourceView.measure_unit_x;
         var labelY = resourceView.measure_unit_y;
+        var positionX = 'outer-middle';
+        var positionY = 'outer-middle';
         
         switch (chart_type) {
             case 'Pie Chart':
@@ -57,6 +59,7 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                 break;
             case 'Bar Chart':
                 chart_type = 'bar';
+                positionY = 'outer-center';
                 break;
             case 'Stacked Bar Chart':
                 chart_type = 'bar';
@@ -66,6 +69,7 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                 break;
             case 'Spline Chart':
                 chart_type = 'spline';
+                positionX = 'outer-center';
                 break;
         }
 
@@ -137,7 +141,7 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                     },
                     label: {
                     	text: labelX,
-                    	position: 'outer-center'
+                    	position: positionX
                     }
                 },
                 y: {
@@ -150,7 +154,7 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                     },
                     label: {
                     	text: labelY,
-                    	position: 'outer-middle'
+                    	position: positionY
                     }
                 },
                 rotated: !! resourceView.rotated
