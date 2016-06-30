@@ -44,6 +44,9 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                                                                         item: {
                                                                             onclick: function(id) {}
                                                                         }};
+                                                                        
+        var labelX = resourceView.measure_unit_x;
+        var labelY = resourceView.measure_unit_y;
         
         switch (chart_type) {
             case 'Pie Chart':
@@ -128,18 +131,26 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                         centered: true,
                         format: function (d) {
                             var measureUnit = resourceView.measure_unit_x;
-                            if (measureUnit) return x_list[d] + measureUnit;
+                            if (measureUnit) return x_list[d];
                             return x_list[d];
                         }
+                    },
+                    label: {
+                    	text: labelX,
+                    	position: 'outer-middle'
                     }
                 },
                 y: {
                     tick: {
                         format: function(d) {
                             var measureUnit = resourceView.measure_unit_y;
-                            if (measureUnit) return d + measureUnit;
+                            if (measureUnit) return d;
                             return d;
                         }
+                    },
+                    label: {
+                    	text: labelY,
+                    	position: 'outer-middle'
                     }
                 },
                 rotated: !! resourceView.rotated
