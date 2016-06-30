@@ -137,7 +137,7 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                     },
                     label: {
                     	text: labelX,
-                    	position: 'outer-middle'
+                    	position: 'outer-center'
                     }
                 },
                 y: {
