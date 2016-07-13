@@ -44,7 +44,7 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                                                                         item: {
                                                                             onclick: function(id) {}
                                                                         }};
-        
+
         switch (chart_type) {
             case 'Pie Chart':
                 chart_type = 'pie';
@@ -69,6 +69,36 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
         if (!Array.isArray(key_fields)) {
             key_fields = [key_fields];
         }
+      
+        if (resourceView.aggregate) {
+            var remap_data = [],
+                data_len, remap_data_len, aggregator, flag, tmp;
+            for (i=0, data_len = data.length; i<data_len; i++){
+                aggregator = data[i][x_fields];
+                flag = false;
+                for (j=0, remap_data_len = remap_data.length; j<remap_data_len; j++){
+                    if (remap_data[j][x_fields] === aggregator) {
+                        tmp = parseFloat(data[i][key_fields]);
+                        if (!isNaN(tmp)) {
+                          remap_data[j][key_fields] += tmp;
+                        }
+                        flag = true;
+                        break;
+                    }
+                }
+                if (!flag) {
+                  tmp = parseFloat(data[i][key_fields]);
+                  if (!isNaN(tmp)){
+                    data[i][key_fields] = tmp;
+                    remap_data.push(data[i]);
+                  }
+                }
+            }
+            data = remap_data;
+            data.sort(function (a, b) {
+              return parseFloat(a[x_fields]) - parseFloat(b[x_fields]);
+            })
+        }
 
         if (Array.isArray(x_fields)) {
             for (i = 0; i < data.length; i++) {
@@ -86,10 +116,9 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
             }
         }
 
-        console.log(resourceView.remap_key)
         if (resourceView.remap_key != '') {
-            var remap_data = [],
-                remap_key_fields = [],
+            remap_data = [];
+            var remap_key_fields = [],
                 tmp_object = {},
                 remap_field = resourceView.remap_key;
             for (i in data) {
@@ -100,9 +129,6 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
             data = remap_data;
             key_fields = remap_key_fields;
         }
-
-        console.log(resourceView);
-        console.log(data);
 
         return {
             bindto: elementId,
@@ -158,6 +184,7 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
             legend: legend
         }
     }
+
 
     function textChartBuilder(elementId, resourceView, data) {
 
@@ -267,4 +294,4 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
         return query;
     }
 
-})(this.ckan.views.c3charts, this.jQuery);
+})(this.ckan.views.c3charts, this.jQuery, this._);
