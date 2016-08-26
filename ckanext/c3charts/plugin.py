@@ -68,16 +68,16 @@ class ChartsPlugin(plugins.SingletonPlugin):
                                 {'value': 'Spline Chart'},
                                 {'value': 'Table Chart'},
                                 {'value': 'Simple Chart'}],
-                'color_schemes': [{'value': '#B80000, #995522, #556677, #118888, #115588, '
+                'color_schemes': [{'value': '#FBD679, #995522, #556677, #118888, #115588, '
                                             '#4C3D3D, #2B2B2B, #660000, #221100',
                                    'text': 'Myanmar'},
-                                  {'value': '#DDBBAA, #79E6F2, #88AA99, #00A864, #228899, '
+                                  {'value': '#00C274, #79E6F2, #88AA99, #00A864, #228899, '
                                             '#3F797F, #775555, #118855, #008751, #3D4C46',
                                    'text': 'Nigeria'},
-                                  {'value': '#ADC0D8, #79AFF2, #8899AA, #0EAAB2, #00A0A8, '
+                                  {'value': '#FF1414, #79AFF2, #8899AA, #0EAAB2, #00A0A8, '
                                             '#776655, #118888, #885511, #3F5C7F, #225599',
                                    'text': 'Uganda'},
-                                  {'value': '#ADB1D8, #8899AA, #7983F2, #777752, #887711, '
+                                  {'value': '#24A4FF, #8899AA, #7983F2, #777752, #887711, '
                                             '#0070C0, #0062A8, #3F457F, #115588, #3D464C',
                                    'text': 'Tanzania'}],
                 'text_chart_number_actions': [{'value': 'substract',
