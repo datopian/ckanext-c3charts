@@ -68,7 +68,7 @@ class ChartsPlugin(plugins.SingletonPlugin):
                                 {'value': 'Spline Chart'},
                                 {'value': 'Table Chart'},
                                 {'value': 'Simple Chart'}],
-                'color_schemes': [{'value': '#FBD679, #995522, #556677, #118888, #115588, '
+                'color_schemes': [{'value': '#FCCB45, #995522, #556677, #118888, #115588, '
                                             '#4C3D3D, #2B2B2B, #660000, #221100',
                                    'text': 'Myanmar'},
                                   {'value': '#00C274, #79E6F2, #88AA99, #00A864, #228899, '
