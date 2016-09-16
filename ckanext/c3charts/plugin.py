@@ -77,7 +77,7 @@ class ChartsPlugin(plugins.SingletonPlugin):
                                   {'value': '#FF1414, #79AFF2, #8899AA, #0EAAB2, #00A0A8, '
                                             '#776655, #118888, #885511, #3F5C7F, #225599',
                                    'text': 'Uganda'},
-                                  {'value': '#0092fa, #8899AA, #7983F2, #777752, #887711, '
+                                  {'value': '#007AD6, #8899AA, #7983F2, #777752, #887711, '
                                             '#0070C0, #0062A8, #3F457F, #115588, #3D464C',
                                    'text': 'Tanzania'}],
                 'text_chart_number_actions': [{'value': 'substract',
