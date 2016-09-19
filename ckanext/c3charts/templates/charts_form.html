@@ -1,5 +1,9 @@
 {% resource 'c3charts/form' %}
+{% resource 'c3charts/jscolor' %}
+{% resource 'c3charts/palette' %}
+{% resource 'c3charts/colors_scheme' %}
 {% import 'macros/form.html' as form %}
+
 
 <div data-module="c3charts_form"
      data-module-controls="{{ h.dump_json(resource_view) }}"
@@ -11,8 +15,32 @@
         {{ form.select('chart_type', label=_('Chart Type'), options=chart_types,
             selected=resource_view['chart_type'], is_required=True) }}
 
-        {{ form.select('color_scheme', label=_('Color Pattern'), options=color_schemes,
-            selected=resource_view['color_scheme'], is_required=True) }}
+        <div class="control-group control-full">
+            <label class="control-label" id="chart_base_color_label">
+                <span title="This field is required" class="control-required">*</span> Chart base color
+            </label>
+            <div class="controls ">
+                {% if resource_view['chart_base_color'] %}
+                  <input id="chart_base_color" name="chart_base_color" class="jscolor"
+                       value="{{ resource_view['chart_base_color'] }}">
+                {% else %}
+                  <input id="chart_base_color" name="chart_base_color" class="jscolor"
+                       value="000000">
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="control-group control-full color_scheme">
+            <div class="controls color_scheme">
+                {% if resource_view['color_scheme'] %}
+                  <input id="color_scheme" name="color_scheme" class="color_scheme"
+                       value="{{ resource_view['color_scheme'] }}">
+                {% else %}
+                  <input id="color_scheme" name="color_scheme" class="color_scheme"
+                       value="{{ default_color_scheme }}">
+                {% endif %}
+            </div>
+        </div>
 
         {{ form.select('legend', label=_('Legend'), options=legend_options,
             selected=resource_view['legend'], is_required=True) }}

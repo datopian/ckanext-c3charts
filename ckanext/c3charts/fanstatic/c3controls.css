@@ -39,3 +39,11 @@
 .c3charts-form-split-container input[type="checkbox"] {
     top: 3px;
 }
+
+#chart_base_color {
+    width: 220px
+}
+
+.color_scheme {
+    display: none
+}
