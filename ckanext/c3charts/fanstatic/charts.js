@@ -137,6 +137,30 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
             key_fields = remap_key_fields;
         }
 
+
+        var position;
+        var tmp = Number.MIN_VALUE;
+
+        for (i = 0; i < key_fields.length; i++) {
+
+            for (j = 0; j < data.length; j++) {
+
+                if (data[j].hasOwnProperty(key_fields[i]) && $.isNumeric(data[j][key_fields[i]])) {
+
+                    if (parseInt(data[j][key_fields[i]]) > tmp) {
+                        tmp = parseInt(data[j][key_fields[i]])
+                        position = i;
+                    }
+
+                }
+
+            }
+        }
+
+        var color_pattern = resourceView.color_scheme.split(',');
+        var base_color =  color_pattern.shift();
+        color_pattern.splice(position, 0, base_color);
+
         return {
             bindto: elementId,
             data: {
@@ -186,7 +210,7 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                 rotated: !! resourceView.rotated
             },
             color: {
-                pattern: resourceView.color_scheme.split(',')
+                pattern: color_pattern
             },
             grid: {
                 x: {
