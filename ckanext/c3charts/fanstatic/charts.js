@@ -139,7 +139,7 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
 
 
         var position;
-        var tmp = Number.MIN_VALUE;
+        var min = Number.MIN_VALUE;
 
         for (i = 0; i < key_fields.length; i++) {
 
@@ -147,8 +147,8 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
 
                 if (data[j].hasOwnProperty(key_fields[i]) && $.isNumeric(data[j][key_fields[i]])) {
 
-                    if (parseInt(data[j][key_fields[i]]) > tmp) {
-                        tmp = parseInt(data[j][key_fields[i]])
+                    if (parseInt(data[j][key_fields[i]]) > min) {
+                        min = parseInt(data[j][key_fields[i]])
                         position = i;
                     }
 
