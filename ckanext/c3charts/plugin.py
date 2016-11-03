@@ -69,7 +69,7 @@ class ChartsPlugin(plugins.SingletonPlugin):
                                 {'value': 'Spline Chart'},
                                 {'value': 'Table Chart'},
                                 {'value': 'Simple Chart'}],
-                'default_color_scheme': '#000000,#1F1E1C,#3E4037,#55634F,#65886E,#80A8A1,#A0B5C3,#C2C3DB,#EDE7F2',
+                'default_color_scheme': '#FFDF12,#B9F10B,#5DD214,#1DB51C,#219B4E,#25826A,#27636B,#263E56,#242842,#252131,#1F1B22,#141314',
                 'text_chart_number_actions': [{'value': 'substract',
                                                'text': 'Substract last two entries'},
                                               {'value': 'average',

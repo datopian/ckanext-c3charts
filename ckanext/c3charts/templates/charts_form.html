@@ -1,7 +1,4 @@
 {% resource 'c3charts/form' %}
-{% resource 'c3charts/jscolor' %}
-{% resource 'c3charts/palette' %}
-{% resource 'c3charts/colors_scheme' %}
 {% import 'macros/form.html' as form %}
 
 
@@ -16,7 +13,7 @@
             selected=resource_view['chart_type'], is_required=True) }}
 
         <div class="control-group control-full">
-            <label class="control-label" id="chart_base_color_label">
+            <label class="control-label" for="chart_base_color">
                 <span title="This field is required" class="control-required">*</span> Chart base color
             </label>
             <div class="controls ">
@@ -25,22 +22,20 @@
                        value="{{ resource_view['chart_base_color'] }}">
                 {% else %}
                   <input id="chart_base_color" name="chart_base_color" class="jscolor"
-                       value="000000">
+                       value="FFDF12">
                 {% endif %}
             </div>
         </div>
 
-        <div class="control-group control-full color_scheme">
-            <div class="controls color_scheme">
-                {% if resource_view['color_scheme'] %}
-                  <input id="color_scheme" name="color_scheme" class="color_scheme"
-                       value="{{ resource_view['color_scheme'] }}">
-                {% else %}
-                  <input id="color_scheme" name="color_scheme" class="color_scheme"
-                       value="{{ default_color_scheme }}">
-                {% endif %}
-            </div>
-        </div>
+
+        {% if resource_view['color_scheme'] %}
+          {{ form.input('color_scheme', id='color_scheme', value=resource_view['color_scheme'],
+                            classes=['color_scheme'], is_required=True) }}
+        {% else %}
+          {{ form.input('color_scheme', id='color_scheme', value=default_color_scheme,
+                            classes=['color_scheme'], is_required=True) }}
+        {% endif %}
+
 
         {{ form.select('legend', label=_('Legend'), options=legend_options,
             selected=resource_view['legend'], is_required=True) }}
@@ -61,15 +56,15 @@
                             checked=resource_view['aggregate'] is defined) }}
 
         <div class="alert alert-info">
-            <p>Select the keys for the data that needs to be charted.</p>
+            <p>Select the keys for the data that needs to be charted. You can reorder by dragging.</p>
         </div>
         <label class="control-label" id="key_fields_label">
             <span title="This field is required" class="control-required">*</span> Data keys
         </label>
-        <div class="c3charts-form-split-container" id="key_fields_container">
+        <div class="c3charts-form-split-container sortable" id="key_fields_container">
             {% for item in fields %}
                 {{ form.checkbox('key_fields', id=['key_fields_', item.value]|join, label=item.value,
-                            value=item.value, checked=False, classes=['c3select']) }}
+                            value=item.value, checked=False, classes=['c3select', 'key_field']) }}
             {% endfor %}
         </div>
         <div id="remap-key">
@@ -80,15 +75,15 @@
 
         <div id="x-fields">
             <div class="alert alert-info" id="x_fields_help">
-                <p>Select the keys for the progression (x-axis) of the data values.</p>
+                <p>Select the keys for the progression (x-axis) of the data values. Put in same order as data keys.</p>
             </div>
             <label class="control-label" id="x_fields_label">
                 <span title="This field is required" class="control-required">*</span> Progress keys
             </label>
-            <div class="c3charts-form-split-container" id="x_fields_container">
+            <div class="c3charts-form-split-container sortable" id="x_fields_container">
                 {% for item in fields %}
                     {{ form.checkbox('x_fields', id=['x_fields_', item.value]|join, label=item.value,
-                            value=item.value, checked=False, classes=['c3select']) }}
+                            value=item.value, checked=False, classes=['c3select', 'x_field']) }}
                 {% endfor %}
             </div>
             {{ form.input('measure_unit_x', label=_('Append Unit'), value=resource_view['measure_unit_x']) }}

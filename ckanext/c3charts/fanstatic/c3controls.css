@@ -12,6 +12,7 @@
     display: flex;
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
+    flex-direction: column;
 }
 
 .c3charts-form-split-container .controls {
@@ -41,9 +42,19 @@
 }
 
 #chart_base_color {
-    width: 220px
+    width: 220px;
+    height: 30px;
 }
 
 .color_scheme {
     display: none
+}
+
+.sortable-placeholder {
+    margin-left: 10 !important;
+    border: 10px solid #ccc;
+    width: 200px;
+    -webkit-box-shadow: 0px 0px 10px #888;
+    -moz-box-shadow: 0px 0px 10px #888;
+    box-shadow: 0px 0px 10px #888;
 }

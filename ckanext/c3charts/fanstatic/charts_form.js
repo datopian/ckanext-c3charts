@@ -32,7 +32,15 @@ ckan.module('c3charts_form', function ($, _) {
             });
 
             if (Array.isArray(key_fields)) {
-                for (i in key_fields) {
+                for (i = 0; i < key_fields.length; i++) {
+                    if(i == 0) {
+                        var currentDiv = $('[id=\'key_fields_' + key_fields[i] + '\']').parents('div.key_field');
+                        currentDiv.insertBefore('div.key_field:first');
+                    } else {
+                        var currentDiv = $('[id=\'key_fields_' + key_fields[i] + '\']').parents('div.key_field');
+                        var previousDiv =$('[id=\'key_fields_' + key_fields[i-1] + '\']').parents('div.key_field');
+                        currentDiv.insertAfter(previousDiv);
+                    }
                     $('[id=\'key_fields_' + key_fields[i] + '\']').prop('checked', 'True');
                 }
             } else {
@@ -40,7 +48,15 @@ ckan.module('c3charts_form', function ($, _) {
             }
 
             if (Array.isArray(x_fields)) {
-                for (i in x_fields) {
+                for (i = 0; i < x_fields.length; i++) {
+                    if(i == 0) {
+                        var currentDiv = $('[id=\'x_fields_' + x_fields[i] + '\']').parents('div.x_field');
+                        currentDiv.insertBefore('div.x_field:first');
+                    } else {
+                        var currentDiv = $('[id=\'x_fields_' + x_fields[i] + '\']').parents('div.x_field');
+                        var previousDiv =$('[id=\'x_fields_' + x_fields[i-1] + '\']').parents('div.x_field');
+                        currentDiv.insertAfter(previousDiv);
+                    }
                     $('[id=\'x_fields_' + x_fields[i] + '\']').prop('checked', 'True');
                 }
             } else {
@@ -51,6 +67,26 @@ ckan.module('c3charts_form', function ($, _) {
                                 pallete2: ['#8888AA', '#888811']};
             $.each(colorSchemes, function () {
                 $('#colors_select').append($("<option><div style='background: colorSchemes[value][0]'>AA</div></option>"));
+            });
+
+            $('#chart_base_color').change(function() {
+
+                var hex = '#' + $('#chart_base_color').val();
+                var base = new KolorWheel(hex);
+                var target = base.abs('#141314', 12);
+                var color_scheme = [];
+
+                target.each(function() {
+                    color_scheme.push(this.getHex());
+                });
+                $('#color_scheme').val(color_scheme.toString());
+
+            });
+
+            $('.sortable').sortable({
+                cursorAt: { left: 5 },
+                axis: 'y',
+                placeholder: 'sortable-placeholder'
             });
         }
     }

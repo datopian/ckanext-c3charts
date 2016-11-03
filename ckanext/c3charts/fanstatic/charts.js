@@ -169,6 +169,7 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                     value: key_fields
                 },
                 type: chart_type,
+                order: '',
                 groups: resourceView.chart_type != 'Stacked Bar Chart' || [key_fields],
                 labels: !! resourceView.data_labels
             },
