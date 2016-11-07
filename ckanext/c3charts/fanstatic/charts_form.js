@@ -17,7 +17,26 @@ ckan.module('c3charts_form', function ($, _) {
             $('#table-chart').hide();
             $('#remap-key').hide();
         }
-    }
+    };
+
+    function updateColorScheme() {
+        var schemeLength;
+        var n = $('input[name=key_fields]:checked').length;
+        if (n==0 || n==1) {
+            schemeLength = 2;
+        } else {
+            schemeLength = n;
+        }
+        var hex = '#' + $('#chart_base_color').val();
+        var complementaryColor = '#' + $('#chart_complementary_color').val();
+        var base = new KolorWheel(hex);
+        var target = base.abs(complementaryColor, schemeLength);
+        var color_scheme = [];
+        target.each(function() {
+            color_scheme.push(this.getHex());
+        });
+        $('#color_scheme').val(color_scheme.toString());
+    };
 
     return {
         initialize: function () {
@@ -69,18 +88,16 @@ ckan.module('c3charts_form', function ($, _) {
                 $('#colors_select').append($("<option><div style='background: colorSchemes[value][0]'>AA</div></option>"));
             });
 
+            $('input[name=key_fields]').change(function() {
+                updateColorScheme();
+            });
+
             $('#chart_base_color').change(function() {
+                updateColorScheme();
+            });
 
-                var hex = '#' + $('#chart_base_color').val();
-                var base = new KolorWheel(hex);
-                var target = base.abs('#141314', 12);
-                var color_scheme = [];
-
-                target.each(function() {
-                    color_scheme.push(this.getHex());
-                });
-                $('#color_scheme').val(color_scheme.toString());
-
+            $('#chart_complementary_color').change(function() {
+                updateColorScheme();
             });
 
             $('.sortable').sortable({

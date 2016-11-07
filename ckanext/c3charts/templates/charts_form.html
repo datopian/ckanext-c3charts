@@ -27,6 +27,21 @@
             </div>
         </div>
 
+        <div class="control-group control-full">
+            <label class="control-label" for="chart_complementary_color">
+                <span title="This field is required" class="control-required">*</span> Chart complementary color
+            </label>
+            <div class="controls ">
+                {% if resource_view['chart_complementary_color'] %}
+                  <input id="chart_complementary_color" name="chart_complementary_color" class="jscolor"
+                       value="{{ resource_view['chart_complementary_color'] }}">
+                {% else %}
+                  <input id="chart_complementary_color" name="chart_complementary_color" class="jscolor"
+                       value="2008FF">
+                {% endif %}
+            </div>
+        </div>
+
 
         {% if resource_view['color_scheme'] %}
           {{ form.input('color_scheme', id='color_scheme', value=resource_view['color_scheme'],

@@ -41,9 +41,13 @@
     top: 3px;
 }
 
-#chart_base_color {
+#chart_base_color, #chart_complementary_color {
     width: 220px;
     height: 30px;
+}
+
+#chart_complementary_color {
+    margin-top: 40px;
 }
 
 .color_scheme {

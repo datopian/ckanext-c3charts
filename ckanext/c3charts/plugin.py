@@ -21,6 +21,7 @@ class ChartsPlugin(plugins.SingletonPlugin):
 
     def info(self):
         schema = {
+            'chart_complementary_color': [not_empty],
             'chart_base_color': [not_empty],
             'chart_type': [not_empty],
             'key_fields': [not_empty],
