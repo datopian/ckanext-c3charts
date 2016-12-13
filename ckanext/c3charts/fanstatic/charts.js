@@ -137,7 +137,15 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
             key_fields = remap_key_fields;
         }
 
+        var chartContainer = $(elementId).parent();
+        var width = chartContainer.attr('data-graph_width');
+        var height = chartContainer.attr('data-graph_height');
+
         return {
+            size: {
+                width: Number(width),
+                height: Number(height)
+            },
             bindto: elementId,
             data: {
                 json: data,
