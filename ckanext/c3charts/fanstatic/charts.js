@@ -140,15 +140,6 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
         var chartContainer = $(elementId).parent();
         var width = chartContainer.attr('data-graph_width');
         var height = chartContainer.attr('data-graph_height');
-        var tooltip = {};
-
-        if (chart_type === 'pie') {
-            tooltip = {
-              format: {
-                value: function (value, ratio, id, index) { return value; }
-              }
-            }
-        }
 
         return {
             size: {
@@ -213,8 +204,7 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                     show: !! resourceView.y_grid
                 }
             },
-            legend: legend,
-            tooltip: tooltip
+            legend: legend
         }
     }
 
