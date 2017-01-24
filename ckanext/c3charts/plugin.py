@@ -81,7 +81,7 @@ class ChartsPlugin(plugins.SingletonPlugin):
                                             '#0070C0, #0062A8, #3F457F, #115588, #3D464C',
                                    'text': 'Blue'},
                                   {'value': '#FF8F1F, #0066CC, #B27300, #996300, #7F5200, '
-                                            '##005BB7, #3284D6, #66A3E0, #7FB2E5, #99C1EA',
+                                            '#005BB7, #3284D6, #66A3E0, #7FB2E5, #99C1EA',
                                    'text': 'Orange'}
                                   ],
                 'text_chart_number_actions': [{'value': 'substract',
