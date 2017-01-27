@@ -2,12 +2,25 @@
 from setuptools import setup, find_packages  # Always prefer setuptools over distutils
 from codecs import open  # To use a consistent encoding
 from os import path
+import os
 
 here = path.abspath(path.dirname(__file__))
+
+# Recurse into package files
+def package_files(directory):
+    paths = []
+    for (path, directories, filenames) in os.walk(directory):
+        for filename in filenames:
+            paths.append(os.path.join('..', path, filename))
+    return paths
 
 # Get the long description from the relevant file
 with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
+
+    css_files = package_files('ckanext/c3charts/fanstatic')
+    image_files = package_files('ckanext/c3charts/public')
+    html_files = package_files('ckanext/c3charts/templates')
 
 setup(
     name='''ckanext-c3charts''',
@@ -15,7 +28,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # http://packaging.python.org/en/latest/tutorial.html#version
-    version='0.0.1',
+    version='0.3.0',
 
     description='''c3js chart generator for CKAN''',
     long_description=long_description,
@@ -66,6 +79,7 @@ setup(
     # have to be included in MANIFEST.in as well.
     include_package_data=True,
     package_data={
+        '': css_files + image_files + html_files
     },
 
     # Although 'package_data' is the preferred approach, in some case you may
