@@ -148,7 +148,7 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                 var itemKey = item[key]
 
                 if (typeof itemKey === 'string' || itemKey instanceof String){
-                    itemKey = itemKey.replace(',', '.')
+                    item[key] = itemKey.replace(',', '.')
                 }
             })
         })
