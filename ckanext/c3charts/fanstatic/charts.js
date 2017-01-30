@@ -141,6 +141,18 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
         var width = chartContainer.attr('data-graph_width');
         var height = chartContainer.attr('data-graph_height');
 
+        // Update decimal numbers to use dot instead of comma for separator
+        // in order for them to be properly displayed in charts
+        data.forEach(function(item) {
+            Object.keys(item).forEach(function(key) {
+                var itemKey = item[key]
+
+                if (typeof itemKey === 'string' || itemKey instanceof String){
+                    itemKey = itemKey.replace(',', '.')
+                }
+            })
+        })
+
         return {
             size: {
                 width: Number(width),
