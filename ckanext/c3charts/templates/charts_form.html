@@ -11,9 +11,6 @@
         {{ form.select('chart_type', label=_('Chart Type'), options=chart_types,
             selected=resource_view['chart_type'], is_required=True) }}
 
-        {{ form.select('color_scheme', label=_('Color Pattern'), options=color_schemes,
-            selected=resource_view['color_scheme'], is_required=True) }}
-
         {{ form.select('legend', label=_('Legend'), options=legend_options,
             selected=resource_view['legend'], is_required=True) }}
 
