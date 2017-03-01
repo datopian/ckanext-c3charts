@@ -24,7 +24,6 @@ class ChartsPlugin(plugins.SingletonPlugin):
             'chart_type': [not_empty],
             'key_fields': [not_empty],
             'x_fields': [ignore_missing],
-            'color_scheme': [not_empty],
             'header': [ignore_missing],
             'measure_unit_x': [ignore_missing],
             'measure_unit_y': [ignore_missing],
@@ -64,25 +63,11 @@ class ChartsPlugin(plugins.SingletonPlugin):
                                 {'value': 'Stacked Bar Chart'},
                                 {'value': 'Donut Chart'},
                                 {'value': 'Line Chart'},
+                                {'value': 'Area-spline Chart'},
                                 {'value': 'Pie Chart'},
                                 {'value': 'Spline Chart'},
                                 {'value': 'Table Chart'},
                                 {'value': 'Simple Chart'}],
-                'color_schemes': [{'value': '#B80000, #995522, #556677, #118888, #115588, '
-                                            '#4C3D3D, #2B2B2B, #660000, #221100',
-                                   'text': 'Saturated'},
-                                  {'value': '#DDBBAA, #79E6F2, #88AA99, #00A864, #228899, '
-                                            '#3F797F, #775555, #118855, #008751, #3D4C46',
-                                   'text': 'Light'},
-                                  {'value': '#ADC0D8, #79AFF2, #8899AA, #0EAAB2, #00A0A8, '
-                                            '#776655, #118888, #885511, #3F5C7F, #225599',
-                                   'text': 'Pastel'},
-                                  {'value': '#ADB1D8, #8899AA, #7983F2, #777752, #887711, '
-                                            '#0070C0, #0062A8, #3F457F, #115588, #3D464C',
-                                   'text': 'Pastel 2'},
-                                  {'value': '#AA9988, #A88600, #779922, #6C7F3F, #887711, '
-                                            '#555577, #665500, #665100, #4C493D, #2B2B2V',
-                                   'text': 'Contrast'}],
                 'text_chart_number_actions': [{'value': 'substract',
                                                'text': 'Substract last two entries'},
                                               {'value': 'average',
