@@ -67,6 +67,9 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
             case 'Line Chart':
                 chart_type = 'line';
                 break;
+            case 'Area-spline Chart':
+                chart_type = 'area-spline';
+                break;
             case 'Spline Chart':
                 chart_type = 'spline';
                 positionX = 'outer-center';
@@ -140,6 +143,21 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
         var chartContainer = $(elementId).parent();
         var width = chartContainer.attr('data-graph_width');
         var height = chartContainer.attr('data-graph_height');
+        var showAxis = chartContainer.attr('data-show_axis');
+
+        if (typeof showAxis === 'undefined') {
+            showAxis = true;
+        } else {
+            if (showAxis === '1') {
+                showAxis = true;
+            } else if (showAxis === '0') {
+                showAxis = false;
+            } else {
+                showAxis = true;
+            }
+        }
+
+        var colorPattern = ['#00A58D', '#00587C', '#09505D', '#F8AE3C', '#A0C1C2', '#293A4C'];
 
         return {
             size: {
@@ -154,7 +172,11 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                 },
                 type: chart_type,
                 groups: resourceView.chart_type != 'Stacked Bar Chart' || [key_fields],
-                labels: !! resourceView.data_labels
+                labels: {
+                    format: function(value) {
+                        return value + ' ' + resourceView.measure_unit_y;
+                    }
+                }
             },
             padding: {
                 bottom: 16
@@ -176,7 +198,8 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                     label: {
                     	text: labelX,
                     	position: positionX
-                    }
+                    },
+                    show: showAxis
                 },
                 y: {
                     tick: {
@@ -189,12 +212,13 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                     label: {
                     	text: labelY,
                     	position: positionY
-                    }
+                    },
+                    show: showAxis
                 },
                 rotated: !! resourceView.rotated
             },
             color: {
-                pattern: resourceView.color_scheme.split(',')
+                pattern: colorPattern
             },
             grid: {
                 x: {
