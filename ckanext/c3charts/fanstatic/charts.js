@@ -4,7 +4,21 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
 
 (function (self, $) {
     "use strict";
-
+  var api = {
+      get: function(action, params, api_ver = 3) {
+          api_ver = 3;
+          var base_url = ckan.sandbox().client.endpoint;
+          params = $.param(params);
+          var url = base_url + '/api/' + api_ver + '/action/' + action + '?' + params;
+          return $.getJSON(url);
+      },
+      post: function(action, data, api_ver = 3) {
+          api_ver = 3;
+          var base_url = ckan.sandbox().client.endpoint;
+          var url = base_url + '/api/' + api_ver + '/action/' + action;
+          return $.post(url, JSON.stringify(data), "json");
+      }
+  };
     self.init = function init(elementId, resource, resourceView) {
         initPlot(elementId, resource, resourceView);
     };
@@ -12,15 +26,37 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
     function initPlot(elementId, resource, resourceView) {
 
         var queryParams = generateQueryParams(resource, {});
+        // If SQL Statement is available for the resource view
+        // use that to fetch data for the charts otherwise
+        // fetch the entire resource data
+        // TODO: Refactor & optimize
+        if (resourceView.sql_expression){
+           var payload = {
+                sql_expression: resourceView.sql_expression,
+                resource_id: resource.id
+            };
+            api.get('resource_view_sql_search', payload).done(
+                function (data) {
+                    if (resourceView.key_fields) {
+                        if (resourceView.chart_type == 'Table Chart' ||
+                            resourceView.chart_type == 'Simple Chart') {
+                            textChartBuilder(elementId, resourceView, data.result);
+                        } else {
+                            c3.generate(chartBuilder(elementId, resourceView, data.result));
+                        }
+                    } else {
+                        $(elementId).append("No keys defined");
+                    }
 
+                }
+            )
+        }else{
         $.when(
             recline.Backend.Ckan.fetch(resource),
             recline.Backend.Ckan.query(queryParams, resource)
         ).done(function (fetch, query) {
             var fields = fetch.fields,
                 data = query.hits;
-
-
             if (resourceView.key_fields) {
                 if (resourceView.chart_type == 'Table Chart' ||
                     resourceView.chart_type == 'Simple Chart') {
@@ -31,7 +67,7 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
             } else {
                 $(elementId).append("No keys defined");
             }
-        });
+        });}
     }
 
     function chartBuilder(elementId, resourceView, data) {
