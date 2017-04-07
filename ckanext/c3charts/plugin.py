@@ -7,10 +7,24 @@ not_empty = plugins.toolkit.get_validator('not_empty')
 ignore_missing = plugins.toolkit.get_validator('ignore_missing')
 ignore_empty = plugins.toolkit.get_validator('ignore_empty')
 
+try:
+    # CKAN 2.7 and later
+    from ckan.common import config
+except ImportError:
+    # CKAN 2.6 and earlier
+    from pylons import config
+
 
 class ChartsPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer, inherit=True)
     plugins.implements(plugins.IResourceView, inherit=True)
+    plugins.implements(plugins.IActions)
+
+    # IActions
+
+    def get_actions(self):
+        from ckanext.c3charts.actions import (resource_view_sql_search, )
+        return {'resource_view_sql_search': resource_view_sql_search}
 
     # IConfigurer
 
@@ -34,7 +48,8 @@ class ChartsPlugin(plugins.SingletonPlugin):
             'x_grid': [ignore_missing],
             'y_grid': [ignore_missing],
             'remap_key': [ignore_missing],
-            'aggregate': [ignore_missing]
+            'aggregate': [ignore_missing],
+            'sql_expression': [ignore_missing]
         }
 
         return {'name': 'Chart builder',
@@ -49,35 +64,34 @@ class ChartsPlugin(plugins.SingletonPlugin):
     def setup_template_variables(self, context, data_dict):
         resource = data_dict['resource']
         resource_view = data_dict['resource_view']
-
         fields = _get_fields_without_id(resource)
         remap_keys = list(fields)
         remap_keys.insert(0, {'value': ''})
-        logger.debug(remap_keys)
 
-        return {'resource': resource,
-                'resource_view': resource_view,
-                'fields': fields,
-                'remap_keys': remap_keys,
-                'chart_types': [{'value': 'Bar Chart'},
-                                {'value': 'Stacked Bar Chart'},
-                                {'value': 'Donut Chart'},
-                                {'value': 'Line Chart'},
-                                {'value': 'Area-spline Chart'},
-                                {'value': 'Pie Chart'},
-                                {'value': 'Spline Chart'},
-                                {'value': 'Table Chart'},
-                                {'value': 'Simple Chart'}],
-                'text_chart_number_actions': [{'value': 'substract',
-                                               'text': 'Substract last two entries'},
-                                              {'value': 'average',
-                                               'text': 'Average'},
-                                              {'value': 'last',
-                                               'text': 'Show last'}],
-                'legend_options': [{'text': 'Hide', 'value': 'hide'},
-                                     {'text': 'Right', 'value': 'right'},
-                                     {'text': 'Bottom', 'value': 'bottom'}]
-                }
+        return {
+            'resource': resource,
+            'resource_view': resource_view,
+            'fields': fields,
+            'remap_keys': remap_keys,
+            'chart_types': [{'value': 'Bar Chart'},
+                            {'value': 'Stacked Bar Chart'},
+                            {'value': 'Donut Chart'},
+                            {'value': 'Line Chart'},
+                            {'value': 'Area-spline Chart'},
+                            {'value': 'Pie Chart'},
+                            {'value': 'Spline Chart'},
+                            {'value': 'Table Chart'},
+                            {'value': 'Simple Chart'}],
+            'text_chart_number_actions': [{'value': 'substract',
+                                           'text': 'Substract last two entries'},
+                                          {'value': 'average',
+                                           'text': 'Average'},
+                                          {'value': 'last',
+                                           'text': 'Show last'}],
+            'legend_options': [{'text': 'Hide', 'value': 'hide'},
+                               {'text': 'Right', 'value': 'right'},
+                               {'text': 'Bottom', 'value': 'bottom'}]
+        }
 
     def view_template(self, context, data_dict):
         return 'charts_view.html'
