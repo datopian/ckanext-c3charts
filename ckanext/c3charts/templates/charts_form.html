@@ -47,6 +47,28 @@
         </div>
         {{ form.input('measure_unit_y', label=_('Append Unit'), value=resource_view['measure_unit_y']) }}
 
+        <fieldset>
+            <legend>Use SQL expression to load data into the chart</legend>
+            <div><label>Resource ID:</label> <strong>"{{ resource['id'] }}"</strong></div>
+            <div><label>Available columns:</label>
+                {% for item in remap_keys %}
+                    {% if item['value'] %}
+                        <strong>"{{item['value']}}"</strong>{% if loop.last %}{%  else %},{% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div><label>Example query:</label>
+                <pre>SELECT "{{ remap_keys[1]['value']}}" FROM "{{ resource['id'] }}" LIMIT 4</pre>
+            </div>
+            <div class="control-group control-medium">
+                <label class="control-label" for="sql_expression">SQL expression</label>
+                <div class="controls editor">
+                    <textarea id="sql_expression" name="sql_expression" cols="20" rows="5" placeholder="">{{ resource_view['sql_expression'] }}</textarea>
+                </div>
+            </div>
+            <div><strong>NOTE:</strong> If SQL expression is present the chart view will be rendered from the query result otherwise it will resource data.</div>
+        </fieldset>
+
         <div id="x-fields">
             <div class="alert alert-info" id="x_fields_help">
                 <p>Select the keys for the progression (x-axis) of the data values.</p>
