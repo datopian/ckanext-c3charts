@@ -12,30 +12,49 @@
     display: flex;
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.c3charts-form-split-container .radio input[type="radio"],
+.c3charts-form-split-container .checkbox input[type="checkbox"] {
+    position: initial;
+    margin-left: 0;
+    margin-right: 5px;
+}
+
+.controls textarea{
+    width: 100%;
 }
 
 .c3charts-form-split-container .controls {
-    margin-left: 20px;
-    margin-right: 10px;
+    margin-right: 30px;
 }
 
 .c3charts-form-split-container .control-label {
-    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
     text-align: left;
 }
 
 .c3select {
     padding-left: 0px;
     margin-left: 0px;
-    width: 240px;
+    margin-bottom: 0;
+    /*width: 20%;*/
 }
 
 .c3input {
     padding-left: 0px;
     margin-left: 0px;
-    width: 240px;
+    /*width: 20%;*/
 }
 
 .c3charts-form-split-container input[type="checkbox"] {
     top: 3px;
+}
+
+.c3charts-form-split-container .form-group{
+    margin-bottom: initial;
 }
