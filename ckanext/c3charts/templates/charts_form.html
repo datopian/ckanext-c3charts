@@ -2,16 +2,16 @@
 
 <div data-module="c3charts_form" data-module-controls="{{ h.dump_json(resource_view) }}" id="c3controls" class="c3controls">
 
-<div class="c3charts-form-split-container">
-    {% block form %} {{ form.select('chart_type', label=_('Chart Type'), options=chart_types, selected=resource_view['chart_type'],
-    is_required=True) }} {{ form.select('legend', label=_('Legend'), options=legend_options, selected=resource_view['legend'],
-    is_required=True) }} {{ form.checkbox('rotated', id='rotated', value='True', label=_('Rotate axis'), checked=resource_view['rotated']
-    is defined) }} {{ form.checkbox('data_labels', id='data_labels', value='True', label=_('Show data labels'), checked=resource_view['data_labels']
-    is defined) }} {{ form.checkbox('x_grid', id='x_grid', value='True', label=_('Show grid on x axis'), checked=resource_view['x_grid']
-    is defined) }} {{ form.checkbox('y_grid', id='y_grid', value='True', label=_('Show grid on y axis'), checked=resource_view['y_grid']
-    is defined) }} {{ form.checkbox('aggregate', id='aggregate', value='True', label=_('Aggregate progress keys'), checked=resource_view['aggregate']
-    is defined) }}
-</div>
+    <div class="c3charts-form-split-container">
+        {% block form %} {{ form.select('chart_type', label=_('Chart Type'), options=chart_types, selected=resource_view['chart_type'],
+        is_required=True) }} {{ form.select('legend', label=_('Legend'), options=legend_options, selected=resource_view['legend'],
+        is_required=True) }} {{ form.checkbox('rotated', id='rotated', value='True', label=_('Rotate axis'), checked=resource_view['rotated']
+        is defined) }} {{ form.checkbox('data_labels', id='data_labels', value='True', label=_('Show data labels'), checked=resource_view['data_labels']
+        is defined) }} {{ form.checkbox('x_grid', id='x_grid', value='True', label=_('Show grid on x axis'), checked=resource_view['x_grid']
+        is defined) }} {{ form.checkbox('y_grid', id='y_grid', value='True', label=_('Show grid on y axis'), checked=resource_view['y_grid']
+        is defined) }} {{ form.checkbox('aggregate', id='aggregate', value='True', label=_('Aggregate progress keys'), checked=resource_view['aggregate']
+        is defined) }}
+    </div>
 
     <div class="alert alert-info">
         <p>Select the keys for the data that needs to be charted.</p>
@@ -35,15 +35,11 @@
         <label>Resource ID:</label>
         <div class="well well-sm">"{{ resource['id'] }}"</div>
         <label>Available columns:</label>
-        <table class="table table-bordered">
-            <tbody>
-                <tr class="active">
-                    {% for item in remap_keys %} {% if item['value'] %}
-                    <td class="panel-body">"{{item['value']}}"</td>
-                    {% endif %} {% endfor %}
-                </tr>
-            </tbody>
-        </table>
+        <div class="sql-columns">
+                {% for item in remap_keys %} {% if item['value'] %}
+                <div class="well well-sm">"{{item['value']}}"</div>
+                {% endif %} {% endfor %}
+        </div>
         <div>
             <h5>Example query:</h5>
             <pre class=" well well-sm">SELECT "{{ remap_keys[1]['value']}}" FROM "{{ resource['id'] }}" LIMIT 4</pre>

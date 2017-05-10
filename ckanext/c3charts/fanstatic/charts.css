@@ -30,3 +30,15 @@
     margin-top: 15px;
     margin-bottom: 30px
 }
+
+.sql-columns{
+    display: -ms-flexbox; /* Required for < IE11 */
+    display: flex;
+    -ms-flex-wrap: wrap; /* Required for < IE11 */
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.sql-columns .well{
+    margin: 3px;
+}
