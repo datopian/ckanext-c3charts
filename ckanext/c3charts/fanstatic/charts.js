@@ -5,15 +5,15 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
 (function (self, $) {
     "use strict";
   var api = {
-      get: function(action, params, api_ver = 3) {
-          api_ver = 3;
+      get: function(action, params) {
+          var api_ver = 3;
           var base_url = ckan.sandbox().client.endpoint;
           params = $.param(params);
           var url = base_url + '/api/' + api_ver + '/action/' + action + '?' + params;
           return $.getJSON(url);
       },
-      post: function(action, data, api_ver = 3) {
-          api_ver = 3;
+      post: function(action, data) {
+          var api_ver = 3;
           var base_url = ckan.sandbox().client.endpoint;
           var url = base_url + '/api/' + api_ver + '/action/' + action;
           return $.post(url, JSON.stringify(data), "json");
