@@ -1,5 +1,6 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
+import ckan.logic as l
 import logging
 
 logger = logging.getLogger(__name__)
@@ -41,6 +42,8 @@ class ChartsPlugin(plugins.SingletonPlugin):
             'header': [ignore_missing],
             'measure_unit_x': [ignore_missing],
             'measure_unit_y': [ignore_missing],
+            'x_tick_count': [ignore_missing],
+            'y_tick_count': [ignore_missing],
             'text_chart_number_action': [not_empty],
             'legend': [not_empty],
             'rotated': [ignore_missing],
@@ -49,7 +52,8 @@ class ChartsPlugin(plugins.SingletonPlugin):
             'y_grid': [ignore_missing],
             'remap_key': [ignore_missing],
             'aggregate': [ignore_missing],
-            'sql_expression': [ignore_missing]
+            'sql_expression': [ignore_missing],
+            'use_sql_keys': [ignore_missing]
         }
 
         return {'name': 'Chart builder',
@@ -64,6 +68,16 @@ class ChartsPlugin(plugins.SingletonPlugin):
     def setup_template_variables(self, context, data_dict):
         resource = data_dict['resource']
         resource_view = data_dict['resource_view']
+
+        if 'sql_expression' in resource_view and \
+                        resource_view['sql_expression'] not in (None, '', u''):
+            _ = l.get_action('resource_view_sql_search') \
+                (context, {
+                    'sql_expression': resource_view['sql_expression'],
+                    'resource_id': resource['id']})
+            resource_view['sql_data'] = _['records']
+            resource_view['sql_keys'] = _['fields']
+
         fields = _get_fields_without_id(resource)
         remap_keys = list(fields)
         remap_keys.insert(0, {'value': ''})

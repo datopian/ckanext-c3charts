@@ -4,22 +4,24 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
 
 (function (self, $) {
     "use strict";
-  var api = {
-      get: function(action, params) {
-          var api_ver = 3;
-          var base_url = ckan.sandbox().client.endpoint;
-          params = $.param(params);
-          var url = base_url + '/api/' + api_ver + '/action/' + action + '?' + params;
-          return $.getJSON(url);
-      },
-      post: function(action, data) {
-          var api_ver = 3;
-          var base_url = ckan.sandbox().client.endpoint;
-          var url = base_url + '/api/' + api_ver + '/action/' + action;
-          return $.post(url, JSON.stringify(data), "json");
-      }
-  };
+    var api = {
+        get: function (action, params) {
+            var api_ver = 3;
+            var base_url = ckan.sandbox().client.endpoint;
+            params = $.param(params);
+            var url = base_url + '/api/' + api_ver + '/action/' + action + '?' + params;
+            return $.getJSON(url);
+        },
+        post: function (action, data) {
+            var api_ver = 3;
+            var base_url = ckan.sandbox().client.endpoint;
+            var url = base_url + '/api/' + api_ver + '/action/' + action;
+            return $.post(url, JSON.stringify(data), "json");
+        }
+    };
     self.init = function init(elementId, resource, resourceView) {
+        console.log(elementId);
+        console.log(resourceView);
         initPlot(elementId, resource, resourceView);
     };
 
@@ -30,44 +32,37 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
         // use that to fetch data for the charts otherwise
         // fetch the entire resource data
         // TODO: Refactor & optimize
-        if (resourceView.sql_expression){
-           var payload = {
-                sql_expression: resourceView.sql_expression,
-                resource_id: resource.id
-            };
-            api.get('resource_view_sql_search', payload).done(
-                function (data) {
-                    if (resourceView.key_fields) {
-                        if (resourceView.chart_type == 'Table Chart' ||
-                            resourceView.chart_type == 'Simple Chart') {
-                            textChartBuilder(elementId, resourceView, data.result);
-                        } else {
-                            c3.generate(chartBuilder(elementId, resourceView, data.result));
-                        }
-                    } else {
-                        $(elementId).append("No keys defined");
-                    }
-
-                }
-            )
-        }else{
-        $.when(
-            recline.Backend.Ckan.fetch(resource),
-            recline.Backend.Ckan.query(queryParams, resource)
-        ).done(function (fetch, query) {
-            var fields = fetch.fields,
-                data = query.hits;
+        if (resourceView.sql_expression) {
             if (resourceView.key_fields) {
                 if (resourceView.chart_type == 'Table Chart' ||
                     resourceView.chart_type == 'Simple Chart') {
-                    textChartBuilder(elementId, resourceView, data);
+                    textChartBuilder(elementId, resourceView, resourceView.sql_data);
                 } else {
-                    c3.generate(chartBuilder(elementId, resourceView, data));
+                    c3.generate(chartBuilder(elementId, resourceView, resourceView.sql_data));
                 }
             } else {
                 $(elementId).append("No keys defined");
             }
-        });}
+
+        } else {
+            $.when(
+                recline.Backend.Ckan.fetch(resource),
+                recline.Backend.Ckan.query(queryParams, resource)
+            ).done(function (fetch, query) {
+                var fields = fetch.fields,
+                    data = query.hits;
+                if (resourceView.key_fields) {
+                    if (resourceView.chart_type == 'Table Chart' ||
+                        resourceView.chart_type == 'Simple Chart') {
+                        textChartBuilder(elementId, resourceView, data);
+                    } else {
+                        c3.generate(chartBuilder(elementId, resourceView, data));
+                    }
+                } else {
+                    $(elementId).append("No keys defined");
+                }
+            });
+        }
     }
 
     function chartBuilder(elementId, resourceView, data) {
@@ -76,16 +71,19 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
             x_list = [],
             key_fields = resourceView.key_fields,
             x_fields = resourceView.x_fields,
-            legend = (resourceView.legend == 'hide') ? {show: false} : {position: resourceView.legend,
-                                                                        item: {
-                                                                            onclick: function(id) {}
-                                                                        }};
-                                                                        
+            legend = (resourceView.legend == 'hide') ? {show: false} : {
+                position: resourceView.legend,
+                item: {
+                    onclick: function (id) {
+                    }
+                }
+            };
+
         var labelX = resourceView.measure_unit_x;
         var labelY = resourceView.measure_unit_y;
         var positionX = 'outer-middle';
         var positionY = 'outer-middle';
-        
+
         switch (chart_type) {
             case 'Pie Chart':
                 chart_type = 'pie';
@@ -115,34 +113,34 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
         if (!Array.isArray(key_fields)) {
             key_fields = [key_fields];
         }
-      
+
         if (resourceView.aggregate) {
             var remap_data = [],
                 data_len, remap_data_len, aggregator, flag, tmp;
-            for (i=0, data_len = data.length; i<data_len; i++){
+            for (i = 0, data_len = data.length; i < data_len; i++) {
                 aggregator = data[i][x_fields];
                 flag = false;
-                for (j=0, remap_data_len = remap_data.length; j<remap_data_len; j++){
+                for (j = 0, remap_data_len = remap_data.length; j < remap_data_len; j++) {
                     if (remap_data[j][x_fields] === aggregator) {
                         tmp = parseFloat(data[i][key_fields]);
                         if (!isNaN(tmp)) {
-                          remap_data[j][key_fields] += tmp;
+                            remap_data[j][key_fields] += tmp;
                         }
                         flag = true;
                         break;
                     }
                 }
                 if (!flag) {
-                  tmp = parseFloat(data[i][key_fields]);
-                  if (!isNaN(tmp)){
-                    data[i][key_fields] = tmp;
-                    remap_data.push(data[i]);
-                  }
+                    tmp = parseFloat(data[i][key_fields]);
+                    if (!isNaN(tmp)) {
+                        data[i][key_fields] = tmp;
+                        remap_data.push(data[i]);
+                    }
                 }
             }
             data = remap_data;
             data.sort(function (a, b) {
-              return parseFloat(a[x_fields]) - parseFloat(b[x_fields]);
+                return parseFloat(a[x_fields]) - parseFloat(b[x_fields]);
             })
         }
 
@@ -194,6 +192,32 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
         }
 
         var colorPattern = ['#00A58D', '#00587C', '#09505D', '#F8AE3C', '#A0C1C2', '#293A4C'];
+        if (resourceView.sql_expression) {
+            data = resourceView.sql_data;
+            if (resourceView.use_sql_keys)
+                key_fields = resourceView.sql_keys;
+        }
+        var x_tick = {
+            culling: false,
+            fit: true,
+            centered: true,
+            format: function (d) {
+                var measureUnit = resourceView.measure_unit_x;
+                if (measureUnit) return x_list[d];
+                return x_list[d];
+            }
+        };
+        var y_tick = {
+            format: function (x) {
+                return parseInt(x)
+            }
+        };
+
+        if (resourceView.x_tick_count)
+            x_tick['count'] = resourceView.x_tick_count;
+
+        if (resourceView.y_tick_count)
+            y_tick['count'] = resourceView.y_tick_count;
 
         return {
             size: {
@@ -209,59 +233,44 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                 type: chart_type,
                 groups: resourceView.chart_type != 'Stacked Bar Chart' || [key_fields],
                 labels: {
-                    format: function(value) {
-                        return value + ' ' + resourceView.measure_unit_y;
+                    format: function (value) {
+                        return value;
                     }
                 }
             },
             padding: {
-                bottom: 16
+                bottom: 4
             },
             axis: {
                 x: {
                     type: 'category',
                     categories: x_list,
-                    tick: {
-                        culling: false,
-                        fit: true,
-                        centered: true,
-                        format: function (d) {
-                            var measureUnit = resourceView.measure_unit_x;
-                            if (measureUnit) return x_list[d];
-                            return x_list[d];
-                        }
-                    },
+                    tick: x_tick,
                     label: {
-                    	text: labelX,
-                    	position: positionX
+                        text: labelX,
+                        position: positionX
                     },
                     show: showAxis
                 },
                 y: {
-                    tick: {
-                        format: function(d) {
-                            var measureUnit = resourceView.measure_unit_y;
-                            if (measureUnit) return d;
-                            return d;
-                        }
-                    },
+                    tick: y_tick,
                     label: {
-                    	text: labelY,
-                    	position: positionY
+                        text: labelY,
+                        position: positionY
                     },
                     show: showAxis
                 },
-                rotated: !! resourceView.rotated
+                rotated: !!resourceView.rotated
             },
             color: {
                 pattern: colorPattern
             },
             grid: {
                 x: {
-                    show: !! resourceView.x_grid
+                    show: !!resourceView.x_grid
                 },
                 y: {
-                    show: !! resourceView.y_grid
+                    show: !!resourceView.y_grid
                 }
             },
             legend: legend
