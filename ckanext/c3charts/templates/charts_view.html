@@ -4,7 +4,7 @@
   data-module = "c3charts_builder"
   data-module-resource-id = "{{ resource.id }}"
   data-module-resource-view = "{{ h.dump_json(resource_view) }}"
-  id = "c3chart-{{ resource.id }}"
+  id = "c3chart-{{ resource_view['id'] }}"
   class = "c3chart"
   >
 </div>
