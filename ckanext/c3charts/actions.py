@@ -21,6 +21,7 @@ TIME_FORMAT = '%H:%M'
 
 log = logging.getLogger(__name__)
 
+
 def _format_results(types, results):
     records = []
     for result in results:
@@ -28,13 +29,13 @@ def _format_results(types, results):
         for k, v in zip(types, result):
             if isinstance(v, (datetime, date, time)):
                 _.update({k.encode('utf-8'): v.strftime(
-                    '{0} {1}'.format(DATE_FORMAT,
-                                     TIME_FORMAT))
+                    '{0} {1}'.format(DATE_FORMAT, TIME_FORMAT))
                 })
             else:
                 _.update({k.encode('utf-8'): v})
         records.append(_)
     return records
+
 
 def _search_sql(context, data_dict):
     # Setup DataStore connection with read-only user
@@ -46,11 +47,11 @@ def _search_sql(context, data_dict):
     fields = map(lambda i: i, _types)
     fields.remove('_id')
 
-    records = []
+    records = None
     try:
         context['connection'].execute(u'SET LOCAL statement_timeout TO {0}'.format(60000))
         sql_string = data_dict['sql_expression']
-        records = context['connection'].execute(sql_string).fetchall()
+        records = context['connection'].execute(sql_string)
     except ProgrammingError as e:
         log.error('ProgrammingError: %r', e)
     except DBAPIError, e:
@@ -60,7 +61,13 @@ def _search_sql(context, data_dict):
     finally:
         context['connection'].close()
 
-    return _format_results(fields, records)
+    out = {'records': [],
+           'fields': []}
+    if records is not None:
+        out.update({'records': _format_results(records._metadata.keys, records),
+                    'fields': records._metadata.keys})
+    return out
+
 
 @l.side_effect_free
 def resource_view_sql_search(context, data_dict):
