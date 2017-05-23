@@ -1,4 +1,6 @@
-{% resource 'c3charts/form' %} {% import 'macros/form.html' as form %}
+{% resource 'c3charts/form' %}
+{% resource 'c3charts/charts.css' %}
+ {% import 'macros/form.html' as form %}
 
 <div data-module="c3charts_form" data-module-controls="{{ h.dump_json(resource_view) }}" id="c3controls" class="c3controls">
 
@@ -10,6 +12,7 @@
         is defined) }} {{ form.checkbox('x_grid', id='x_grid', value='True', label=_('Show grid on x axis'), checked=resource_view['x_grid']
         is defined) }} {{ form.checkbox('y_grid', id='y_grid', value='True', label=_('Show grid on y axis'), checked=resource_view['y_grid']
         is defined) }} {{ form.checkbox('aggregate', id='aggregate', value='True', label=_('Aggregate progress keys'), checked=resource_view['aggregate']
+        is defined) }} {{ form.checkbox('use_sql_keys', id='use_sql_keys', value='False', label=_('Use sql keys'), checked=resource_view['use_sql_keys']
         is defined) }}
     </div>
 
@@ -28,7 +31,8 @@
         }}
     </div>
     {{ form.input('measure_unit_y', label=_('Append Unit'), value=resource_view['measure_unit_y']) }}
-
+    {{ form.input('x_tick_count', label=_('X Tick Count'), value=resource_view['x_tick_count']) }}
+    {{ form.input('y_tick_count', label=_('Y Tick Count'), value=resource_view['y_tick_count']) }}
     <h2>SQL expression</h2>
     <p>Use SQL expression to load data into the chart</p>
     <fieldset>
