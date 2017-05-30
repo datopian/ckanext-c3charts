@@ -33,6 +33,12 @@
     {{ form.input('measure_unit_y', label=_('Append Unit'), value=resource_view['measure_unit_y']) }}
     {{ form.input('x_tick_count', label=_('X Tick Count'), value=resource_view['x_tick_count']) }}
     {{ form.input('y_tick_count', label=_('Y Tick Count'), value=resource_view['y_tick_count']) }}
+
+    {{ form.input('r_padding', label=_('Right padding'), value=resource_view['r_padding']) }}
+    {{ form.input('l_padding', label=_('Left padding'), value=resource_view['l_padding']) }}
+    {{ form.input('t_padding', label=_('Top padding'), value=resource_view['t_padding']) }}
+    {{ form.input('b_padding', label=_('Bottom padding'), value=resource_view['b_padding']) }}
+
     <h2>SQL expression</h2>
     <p>Use SQL expression to load data into the chart</p>
     <fieldset>

@@ -219,6 +219,16 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
         if (resourceView.y_tick_count)
             y_tick['count'] = resourceView.y_tick_count;
 
+        var r_pad, l_pad, t_pad, b_pad;
+        if (resourceView.r_padding)
+            r_pad = resourceView.r_padding;
+        if (resourceView.l_padding)
+            l_pad = resourceView.l_padding;
+        if (resourceView.t_padding)
+            t_pad = resourceView.t_padding;
+        if (resourceView.b_padding)
+            b_pad = resourceView.b_padding;
+
         return {
             size: {
                 width: Number(width),
@@ -239,7 +249,10 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                 }
             },
             padding: {
-                bottom: 4
+                top: t_pad,
+                bottom: b_pad,
+                right: r_pad,
+                left: l_pad
             },
             axis: {
                 x: {

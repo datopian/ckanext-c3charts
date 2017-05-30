@@ -55,6 +55,7 @@ class ChartsPlugin(plugins.SingletonPlugin):
             'sql_expression': [ignore_missing],
             'use_sql_keys': [ignore_missing]
         }
+        map(lambda s: schema.update({'{0}_padding'.format(s): [ignore_missing]}), ('r', 'l', 't', 'b'))
 
         return {'name': 'Chart builder',
                 'icon': 'bar-chart',
