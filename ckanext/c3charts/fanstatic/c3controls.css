@@ -17,8 +17,14 @@
     align-content: flex-start;
     -ms-flex-pack: flex-start;
     justify-content: flex-start;
-    -ms-flex-direction: column;
-    flex-direction: column;
+}
+
+.c3charts-form-split-container + .form-group {
+    margin-top: 15px;
+}
+
+.c3controls .form-group:last-child{
+    margin-bottom: 0;
 }
 
 .c3charts-form-split-container .radio input[type="radio"],
