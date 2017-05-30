@@ -42,3 +42,7 @@
 .sql-columns .well{
     margin: 3px;
 }
+
+.c3controls .panel-title{
+    text-transform: uppercase;
+}
