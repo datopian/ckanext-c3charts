@@ -1,91 +1,159 @@
 {% resource 'c3charts/form' %}
 {% resource 'c3charts/charts.css' %}
- {% import 'macros/form.html' as form %}
+{% import 'macros/form.html' as form %}
 
 <div data-module="c3charts_form" data-module-controls="{{ h.dump_json(resource_view) }}" id="c3controls" class="c3controls">
+    {% block form %}
 
-    <div class="c3charts-form-split-container">
-        {% block form %} {{ form.select('chart_type', label=_('Chart Type'), options=chart_types, selected=resource_view['chart_type'],
-        is_required=True) }} {{ form.select('legend', label=_('Legend'), options=legend_options, selected=resource_view['legend'],
-        is_required=True) }} {{ form.checkbox('rotated', id='rotated', value='True', label=_('Rotate axis'), checked=resource_view['rotated']
-        is defined) }} {{ form.checkbox('data_labels', id='data_labels', value='True', label=_('Show data labels'), checked=resource_view['data_labels']
-        is defined) }} {{ form.checkbox('x_grid', id='x_grid', value='True', label=_('Show grid on x axis'), checked=resource_view['x_grid']
-        is defined) }} {{ form.checkbox('y_grid', id='y_grid', value='True', label=_('Show grid on y axis'), checked=resource_view['y_grid']
-        is defined) }} {{ form.checkbox('aggregate', id='aggregate', value='True', label=_('Aggregate progress keys'), checked=resource_view['aggregate']
-        is defined) }} {{ form.checkbox('use_sql_keys', id='use_sql_keys', value='False', label=_('Use sql keys'), checked=resource_view['use_sql_keys']
-        is defined) }}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">{{_('Chart Type')}}</h2>
+                </div>
+                <div class="panel-body">
+                    {{ form.select('chart_type', label=_('Chart Type'), options=chart_types, selected=resource_view['chart_type'],
+                    is_required=True) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">{{_('Chart Legend')}}</h2>
+                </div>
+                <div class="panel-body">
+                    {{ form.select('legend', label=_('Legend'), options=legend_options, selected=resource_view['legend'],
+                    is_required=True) }}
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="alert alert-info">
-        <p>Select the keys for the data that needs to be charted.</p>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">{{_('Chart Options')}}</h2>
+        </div>
+        <div class="panel-body">
+            <div class="c3charts-form-split-container">
+                {{ form.checkbox('rotated', id='rotated', value='True', label=_('Rotate axis'), checked=resource_view['rotated']
+                is defined) }}
+                {{ form.checkbox('data_labels', id='data_labels', value='True', label=_('Show data labels'), checked=resource_view['data_labels']
+                is defined) }}
+                {{ form.checkbox('x_grid', id='x_grid', value='True', label=_('Show grid on x axis'), checked=resource_view['x_grid']
+                is defined) }}
+                {{ form.checkbox('y_grid', id='y_grid', value='True', label=_('Show grid on y axis'), checked=resource_view['y_grid']
+                is defined) }}
+                {{ form.checkbox('aggregate', id='aggregate', value='True', label=_('Aggregate progress keys'), checked=resource_view['aggregate']
+                is defined) }}
+            </div>
+            <div id="remap-key">
+                {{ form.select('remap_key', label=_('Remap'), options=remap_keys, selected=resource_view['remap_key'], is_required=False)
+                }}
+            </div>
+        </div>
     </div>
-    <label class="control-label" id="key_fields_label">
-            <span title="This field is required" class="control-required">*</span> Data keys
-        </label>
-    <div class="c3charts-form-split-container" id="key_fields_container">
-        {% for item in fields %} {{ form.checkbox('key_fields', id=['key_fields_', item.value]|join, label=item.value, value=item.value,
-        checked=False, classes=['c3select']) }} {% endfor %}
-    </div>
-    <div id="remap-key">
-        {{ form.select('remap_key', label=_('Remap'), options=remap_keys, selected=resource_view['remap_key'], is_required=False)
-        }}
-    </div>
-    {{ form.input('measure_unit_y', label=_('Append Unit'), value=resource_view['measure_unit_y']) }}
-    {{ form.input('x_tick_count', label=_('X Tick Count'), value=resource_view['x_tick_count']) }}
-    {{ form.input('y_tick_count', label=_('Y Tick Count'), value=resource_view['y_tick_count']) }}
 
-    {{ form.input('r_padding', label=_('Right padding'), value=resource_view['r_padding']) }}
-    {{ form.input('l_padding', label=_('Left padding'), value=resource_view['l_padding']) }}
-    {{ form.input('t_padding', label=_('Top padding'), value=resource_view['t_padding']) }}
-    {{ form.input('b_padding', label=_('Bottom padding'), value=resource_view['b_padding']) }}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">{{_('Axis Tick Count')}}</h2>
+        </div>
+        <div class="panel-body">
+            {{ form.input('x_tick_count', label=_('X Tick Count'), value=resource_view['x_tick_count']) }}
+            {{ form.input('y_tick_count', label=_('Y Tick Count'), value=resource_view['y_tick_count']) }}
+        </div>
+    </div>
 
-    <h2>SQL expression</h2>
-    <p>Use SQL expression to load data into the chart</p>
-    <fieldset>
-        <label>Resource ID:</label>
-        <div class="well well-sm">"{{ resource['id'] }}"</div>
-        <label>Available columns:</label>
-        <div class="sql-columns">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">{{_('Chart Padding')}}</h2>
+        </div>
+        <div class="panel-body">
+            {{ form.input('t_padding', label=_('Top padding'), placeholder='0', value=resource_view['t_padding']) }}
+            {{ form.input('r_padding', label=_('Right padding'), placeholder='0', value=resource_view['r_padding']) }}
+            {{ form.input('b_padding', label=_('Bottom padding'), placeholder='0', value=resource_view['b_padding']) }}
+            {{ form.input('l_padding', label=_('Left padding'), placeholder='0', value=resource_view['l_padding']) }}
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title"><span title="{{_('This field is required')}}" class="control-required">*</span> {{_('Data Keys')}}</h2>
+        </div>
+        <div class="panel-body">
+            <p class="alert alert-info">{{_('Select the keys for the data that needs to be charted.')}}</p>
+            <div class="c3charts-form-split-container" id="key_fields_container">
+                {% for item in fields %}
+                {{ form.checkbox('key_fields', id=['key_fields_', item.value]|join, label=item.value, value=item.value,
+                checked=False, classes=['c3select']) }}
+                {% endfor %}
+            </div>
+            {{ form.input('measure_unit_y', label=_('Append Unit'), value=resource_view['measure_unit_y']) }}
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title"><span title="{{_('This field is required')}}" class="control-required">*</span> {{_('Progress keys')}}</h2>
+        </div>
+        <div class="panel-body">
+            <p class="alert alert-info">{{_('Select the keys for the progression (x-axis) of the data values.')}}</p>
+
+            <div id="x-fields">
+                <div class="c3charts-form-split-container" id="x_fields_container">
+                    {% for item in fields %} {{ form.checkbox('x_fields', id=['x_fields_', item.value]|join, label=item.value, value=item.value,
+                    checked=False, classes=['c3select']) }} {% endfor %}
+                </div>
+                {{ form.input('measure_unit_x', label=_('Append Unit'), value=resource_view['measure_unit_x']) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">{{_('SQL expression')}}</h2>
+        </div>
+        <div class="panel-body">
+            {{ form.checkbox('use_sql_keys', id='use_sql_keys', value='False', label=_('Use SQL keys'), checked=resource_view['use_sql_keys']
+            is defined) }}
+            <p class="alert alert-info">{{_('Use SQL expression to load data into the chart')}}</p>
+            <label>{{_('Resource ID:')}}</label>
+            <div class="well well-sm">"{{ resource['id'] }}"</div>
+            <label>{{_('Available columns:')}}</label>
+            <div class="sql-columns">
                 {% for item in remap_keys %} {% if item['value'] %}
                 <div class="well well-sm">"{{item['value']}}"</div>
-                {% endif %} {% endfor %}
-        </div>
-        <div>
-            <h5>Example query:</h5>
-            <pre class=" well well-sm">SELECT "{{ remap_keys[1]['value']}}" FROM "{{ resource['id'] }}" LIMIT 4</pre>
-        </div>
-        <div class="form-group control-medium">
-            <label class="control-label" for="sql_expression">SQL Expression</label>
-            <div class="controls editor">
-                <textarea id="sql_expression" class="form-control" name="sql_expression" rows="5" placeholder="">{{ resource_view['sql_expression'] }}</textarea>
+                {% endif %}
+                {% endfor %}
             </div>
-            <p class="help-block"><strong class="text-uppercase">Note:</strong> If SQL expression is present the chart view will be rendered from
-                the query result otherwise it will resource data.</p>
+            <div>
+                <h5>{{_('Example query:')}}</h5>
+                <pre class=" well well-sm">SELECT "{{ remap_keys[1]['value']}}" FROM "{{ resource['id'] }}" LIMIT 4</pre>
+            </div>
+            <div class="form-group control-medium">
+                <label class="control-label" for="sql_expression">{{_('SQL Expression')}}</label>
+                <div class="controls editor">
+                    <textarea id="sql_expression" class="form-control" name="sql_expression" rows="5" placeholder="">{{ resource_view['sql_expression'] }}</textarea>
+                </div>
+                <p class="help-block"><strong class="text-uppercase">{{_('Note:')}}</strong> {{_('If SQL expression is present the chart view will be rendered from
+                    the query result otherwise it will resource data.')}}</p>
+            </div>
         </div>
-    </fieldset>
-
-    <div id="x-fields">
-        <div class="alert alert-info" id="x_fields_help">
-            <p>Select the keys for the progression (x-axis) of the data values.</p>
-        </div>
-        <label class="control-label" id="x_fields_label">
-                <span title="This field is required" class="control-required">*</span> Progress keys
-            </label>
-        <div class="c3charts-form-split-container" id="x_fields_container">
-            {% for item in fields %} {{ form.checkbox('x_fields', id=['x_fields_', item.value]|join, label=item.value, value=item.value,
-            checked=False, classes=['c3select']) }} {% endfor %}
-        </div>
-        {{ form.input('measure_unit_x', label=_('Append Unit'), value=resource_view['measure_unit_x']) }}
     </div>
+
     <div id="table-chart">
-        <div class="alert alert-info">
-            <p>Customize the look of the table chart.</p>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">{{_('Table Chart Options')}}</h2>
+            </div>
+            <div class="panel-body">
+                <p class="alert alert-info">{{_('Customize the look of the table chart.')}}</p>
+                {{ form.textarea('header', id='header', value=resource_view['header'], label=_('Header text') ) }} {{ form.select('text_chart_number_action',
+                label=_('Number value'), options=text_chart_number_actions, selected=resource_view['text_chart_number_action'], is_required=True)
+                }}
+            </div>
         </div>
-        {{ form.textarea('header', id='header', value=resource_view['header'], label='Header text') }} {{ form.select('text_chart_number_action',
-        label=_('Number value'), options=text_chart_number_actions, selected=resource_view['text_chart_number_action'], is_required=True)
-        }}
     </div>
 
     {% endblock %}
-
 </div>
