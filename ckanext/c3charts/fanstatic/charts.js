@@ -249,10 +249,10 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                 }
             },
             padding: {
-                top: t_pad,
-                bottom: b_pad,
-                right: r_pad,
-                left: l_pad
+                top: parseInt(t_pad),
+                bottom: parseInt(b_pad),
+                right: parseInt(r_pad),
+                left: parseInt(l_pad)
             },
             axis: {
                 x: {
