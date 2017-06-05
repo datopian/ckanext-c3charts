@@ -20,8 +20,6 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
         }
     };
     self.init = function init(elementId, resource, resourceView) {
-        console.log(elementId);
-        console.log(resourceView);
         initPlot(elementId, resource, resourceView);
     };
 
