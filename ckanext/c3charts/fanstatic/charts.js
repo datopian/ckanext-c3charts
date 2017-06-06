@@ -189,7 +189,7 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
             }
         }
 
-        var colorPattern = ['#00A58D', '#00587C', '#09505D', '#F8AE3C', '#A0C1C2', '#293A4C'];
+        var colorPattern = ['#00A58D', '#09505D', '#00587C', '#09505D', '#F8AE3C', '#A0C1C2', '#293A4C'];
         if (resourceView.sql_expression) {
             data = resourceView.sql_data;
             if (resourceView.use_sql_keys)
