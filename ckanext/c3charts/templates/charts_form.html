@@ -30,6 +30,34 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">{{_('X axis label')}}</h2>
+                </div>
+                <div class="panel-body">
+                    {{ form.input('measure_unit_x', label=_('Text'), value=resource_view['measure_unit_x']) }}
+
+                    {{ form.select('x_label_position', label=_('Position'), options=x_label_position_opts, selected=resource_view['x_label_position']) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">{{_('Y axis label')}}</h2>
+                </div>
+                <div class="panel-body">
+                    {{ form.input('measure_unit_y', label=_('Text'), value=resource_view['measure_unit_y']) }}
+
+                    {{ form.select('y_label_position', label=_('Position'), options=y_label_position_opts, selected=resource_view['y_label_position']) }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="panel panel-default">
         <div class="panel-heading">
             <h2 class="panel-title">{{_('Chart Options')}}</h2>
@@ -88,7 +116,7 @@
                 checked=False, classes=['c3select']) }}
                 {% endfor %}
             </div>
-            {{ form.input('measure_unit_y', label=_('Append Unit'), value=resource_view['measure_unit_y']) }}
+
         </div>
     </div>
 
@@ -104,7 +132,7 @@
                     {% for item in fields %} {{ form.checkbox('x_fields', id=['x_fields_', item.value]|join, label=item.value, value=item.value,
                     checked=False, classes=['c3select']) }} {% endfor %}
                 </div>
-                {{ form.input('measure_unit_x', label=_('Append Unit'), value=resource_view['measure_unit_x']) }}
+
             </div>
         </div>
     </div>
