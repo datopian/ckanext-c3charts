@@ -53,7 +53,9 @@ class ChartsPlugin(plugins.SingletonPlugin):
             'remap_key': [ignore_missing],
             'aggregate': [ignore_missing],
             'sql_expression': [ignore_missing],
-            'use_sql_keys': [ignore_missing]
+            'use_sql_keys': [ignore_missing],
+            'y_label_position': [ignore_missing],
+            'x_label_position': [ignore_missing]
         }
         map(lambda s: schema.update({'{0}_padding'.format(s): [ignore_missing]}), ('r', 'l', 't', 'b'))
 
@@ -105,7 +107,19 @@ class ChartsPlugin(plugins.SingletonPlugin):
                                            'text': 'Show last'}],
             'legend_options': [{'text': 'Hide', 'value': 'hide'},
                                {'text': 'Right', 'value': 'right'},
-                               {'text': 'Bottom', 'value': 'bottom'}]
+                               {'text': 'Bottom', 'value': 'bottom'}],
+            'x_label_position_opts': [{'text': 'Inner Right', 'value': 'inner-right'},
+                                      {'text': 'Inner Center', 'value': 'inner-center'},
+                                      {'text': 'Inner Left', 'value': 'inner-left'},
+                                      {'text': 'Outer Right', 'value': 'outer-right'},
+                                      {'text': 'Outer Center', 'value': 'outer-center'},
+                                      {'text': 'Outer Left', 'value': 'outer-left'}],
+            'y_label_position_opts': [{'text': 'Inner Top', 'value': 'inner-top'},
+                                      {'text': 'Inner Middle', 'value': 'inner-middle'},
+                                      {'text': 'Inner Bottom', 'value': 'inner-bottom'},
+                                      {'text': 'Outer Top', 'value': 'outer-top'},
+                                      {'text': 'Outer Middle', 'value': 'outer-middle'},
+                                      {'text': 'Outer Bottom', 'value': 'outer-bottom'}]
         }
 
     def view_template(self, context, data_dict):
