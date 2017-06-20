@@ -79,6 +79,7 @@
                 {{ form.select('remap_key', label=_('Remap'), options=remap_keys, selected=resource_view['remap_key'], is_required=False)
                 }}
             </div>
+            {{ form.input('color_pattern', label=_('Color pattern (comma separated list of hex colors)'), value=resource_view['color_pattern']) }}
         </div>
     </div>
 

@@ -188,6 +188,9 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
         }
 
         var colorPattern = ['#00A58D', '#09505D', '#00587C', '#00A6BC', '#9FCD91', '#293A4C', '#83CCD8', '#A0C1C2'];
+        if (resourceView.color_pattern){
+            colorPattern = resourceView.color_pattern.split(',')
+        }
         if (resourceView.sql_expression) {
             data = resourceView.sql_data;
             if (resourceView.use_sql_keys)

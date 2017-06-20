@@ -55,7 +55,8 @@ class ChartsPlugin(plugins.SingletonPlugin):
             'sql_expression': [ignore_missing],
             'use_sql_keys': [ignore_missing],
             'y_label_position': [ignore_missing],
-            'x_label_position': [ignore_missing]
+            'x_label_position': [ignore_missing],
+            'color_pattern': [ignore_missing]
         }
         map(lambda s: schema.update({'{0}_padding'.format(s): [ignore_missing]}), ('r', 'l', 't', 'b'))
 
