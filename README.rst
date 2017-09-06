@@ -1,4 +1,8 @@
-[![Build Status](https://travis-ci.org/ViderumGlobal/ckanext-c3charts.svg?branch=custom-sql-expressions)](https://travis-ci.org/ViderumGlobal/ckanext-c3charts.svg?branch=custom-sql-expressions)  [![Coverage Status](https://coveralls.io/repos/github/ViderumGlobal/ckanext-c3charts/badge.svg?branch=custom-sql-expressions)](https://coveralls.io/github/ViderumGlobal/ckanext-c3charts?branch=custom-sql-expressions)
+.. image:: https://travis-ci.org/ViderumGlobal/ckanext-c3charts.svg?branch=master
+:target: https://travis-ci.org/ViderumGlobal/ckanext-c3charts
+
+.. image:: https://coveralls.io/repos/github/ViderumGlobal/ckanext-c3charts/badge.svg?branch=custom-sql-expressions
+:target: https://coveralls.io/github/ViderumGlobal/ckanext-c3charts?branch=custom-sql-expressions
 
 =============
 ckanext-charts
