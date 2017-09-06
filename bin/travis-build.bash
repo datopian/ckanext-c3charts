@@ -21,10 +21,21 @@ cd -
 echo "Creating the PostgreSQL user and database..."
 sudo -u postgres psql -c "CREATE USER ckan_default WITH PASSWORD 'pass';"
 sudo -u postgres psql -c 'CREATE DATABASE ckan_test WITH OWNER ckan_default;'
+sudo -u postgres psql -c "CREATE USER datastore_default WITH PASSWORD 'pass';"
+sudo -u postgres psql -c 'CREATE DATABASE datastore_test WITH OWNER ckan_default;'
 
 echo "Initialising the database..."
 cd ckan
 paster db init -c test-core.ini
+# If Postgres >= 9.0, we don't need to use datastore's legacy mode.
+if [ $PGVERSION != '8.4' ]
+then
+  sed -i -e 's/.*datastore.read_url.*/ckan.datastore.read_url = postgresql:\/\/datastore_default:pass@\/datastore_test/' test-core.ini
+  paster datastore -c test-core.ini set-permissions | sudo -u postgres psql
+else
+  sed -i -e 's/.*datastore.read_url.*//' test-core.ini
+fi
+
 cd -
 
 echo "Installing ckanext-charts and its requirements..."
