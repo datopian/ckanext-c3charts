@@ -11,7 +11,12 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
 
     function initPlot(elementId, resource, resourceView) {
 
+        var filters = resourceView.filters || [];
         var queryParams = generateQueryParams(resource, {});
+
+        jQuery.each(filters, function (field, values) {
+            queryParams.filters.push({type: 'term', field: field, term: values});
+        });
 
         $.when(
             recline.Backend.Ckan.fetch(resource),
@@ -44,12 +49,12 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
                                                                         item: {
                                                                             onclick: function(id) {}
                                                                         }};
-                                                                        
+
         var labelX = resourceView.measure_unit_x;
         var labelY = resourceView.measure_unit_y;
         var positionX = 'outer-middle';
         var positionY = 'outer-middle';
-        
+
         switch (chart_type) {
             case 'Pie Chart':
                 chart_type = 'pie';
@@ -76,7 +81,7 @@ this.ckan.views.c3charts = this.ckan.views.c3charts || {};
         if (!Array.isArray(key_fields)) {
             key_fields = [key_fields];
         }
-      
+
         if (resourceView.aggregate) {
             var remap_data = [],
                 data_len, remap_data_len, aggregator, flag, tmp;
