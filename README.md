@@ -1,4 +1,4 @@
-## ckanext-charts
+# Ckan Charts
 
 This extension provides chart library that enables deeper integration of charts into CKAN applications.
 
