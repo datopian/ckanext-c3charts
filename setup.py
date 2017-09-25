@@ -15,7 +15,7 @@ def package_files(directory):
     return paths
 
 # Get the long description from the relevant file
-with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
     css_files = package_files('ckanext/c3charts/fanstatic')
