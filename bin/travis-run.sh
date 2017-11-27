@@ -4,4 +4,4 @@ echo "NO_START=0\nJETTY_HOST=127.0.0.1\nJETTY_PORT=8983\nJAVA_HOME=$JAVA_HOME" |
 sudo cp ckan/ckan/config/solr/schema.xml /etc/solr/conf/schema.xml
 sudo service jetty restart
 
-nosetests --ckan --with-pylons=test.ini
+nosetests --nologcapture --ckan --with-pylons=test.travis.ini --with-coverage --cover-package=ckanext.charts --cover-inclusive --cover-erase --cover-tests
