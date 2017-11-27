@@ -1,5 +1,7 @@
 # Ckan Charts
 
+## [![Build Status](https://travis-ci.org/ViderumGlobal/ckanext-c3charts.svg?branch=master)](https://travis-ci.org/ViderumGlobal/ckanext-c3charts) &middot; [![Coverage Status](https://coveralls.io/repos/github/ViderumGlobal/ckanext-c3charts/badge.svg?branch=master)](https://coveralls.io/github/ViderumGlobal/ckanext-c3charts?branch=master)
+
 This extension provides chart library that enables deeper integration of charts into CKAN applications.
 
 ## Installation
