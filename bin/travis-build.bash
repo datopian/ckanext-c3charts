@@ -28,9 +28,6 @@ cd -
 
 echo "Installing ckanext-charts and its requirements..."
 python setup.py develop
-
-echo "Moving test.ini into a subdir..."
-mkdir subdir
-mv test.ini subdir
+pip install -r dev-requirements.txt
 
 echo "travis-build.bash is done."
