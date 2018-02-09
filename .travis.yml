@@ -1,12 +1,7 @@
 language: python
 python:
   - "2.7"
-env:
-  - PGVERSION=9.2
-  - CKAN_DATASTORE_POSTGRES_DB=datastore_test
-  - CKAN_DATASTORE_POSTGRES_WRITE_USER=ckan_default
-  - CKAN_DATASTORE_POSTGRES_READ_USER=datastore_default
-  - CKAN_DATASTORE_POSTGRES_READ_PWD=pass
+env: PGVERSION=9.2
 dist: trusty
 sudo: required
 cache: pip
