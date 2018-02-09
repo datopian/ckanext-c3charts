@@ -28,6 +28,18 @@ cd ckan
 paster --plugin ckan db init -c test-core.ini
 cd -
 
+echo "Create database user datastore_default"
+sudo -u postgres psql -c "CREATE USER datastore_default WITH PASSWORD 'pass';"
+
+echo "Create database datastore_test owned by ckan_default"
+sudo -u postgres psql -c 'CREATE DATABASE datastore_test WITH OWNER ckan_default;'
+
+echo "List databases"
+psql -h localhost --username=postgres --list
+
+echo "Set permissions"
+paster --plugin=ckan datastore -c ckan/test-core.ini set-permissions | sudo -u postgres psql
+
 echo "Installing ckanext-charts and its requirements..."
 python setup.py develop
 pip install -r dev-requirements.txt
