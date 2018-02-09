@@ -30,6 +30,9 @@ cd -
 
 sudo -E -u postgres ckan/bin/postgres_init/2_create_ckan_datastore_db.sh
 
+echo "List databases"
+psql -h localhost --username=postgres --list
+
 sed -i -e 's/.*datastore.read_url.*/ckan.datastore.read_url = postgresql:\/\/datastore_default:pass@\/datastore_test/' ckan/test-core.ini
 paster datastore -c ckan/test-core.ini set-permissions | sudo -u postgres psql
 
