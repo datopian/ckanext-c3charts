@@ -28,6 +28,11 @@ cd ckan
 paster --plugin ckan db init -c test-core.ini
 cd -
 
+sudo -E -u postgres ckan/bin/postgres_init/2_create_ckan_datastore_db.sh
+
+sed -i -e 's/.*datastore.read_url.*/ckan.datastore.read_url = postgresql:\/\/datastore_default:pass@\/datastore_test/' test-core.ini
+paster datastore -c test-core.ini set-permissions | sudo -u postgres psql
+
 echo "Installing ckanext-charts and its requirements..."
 python setup.py develop
 pip install -r dev-requirements.txt
