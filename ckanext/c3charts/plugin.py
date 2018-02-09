@@ -39,7 +39,7 @@ class ChartsPlugin(plugins.SingletonPlugin):
         }
 
         return {'name': 'Chart builder',
-                'icon': 'bar-chart',
+                'icon': 'bar-chart-o',
                 'filterable': True,
                 'iframed': False,
                 'schema': schema}
