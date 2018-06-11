@@ -1,4 +1,7 @@
 {% resource 'c3charts/main' %}
+{% resource 'c3charts/export-to-png.js' %}
+{% resource 'c3charts/vendor/html2canvas.js' %}
+{% resource 'c3charts/vendor/save-svg-png.js' %}
 
 <div
   data-module = "c3charts_builder"
@@ -7,4 +10,14 @@
   id = "c3chart-{{ resource_view['resource_id'] }}"
   class = "c3chart"
   >
+</div>
+
+<div class="btn-group">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Export <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li data-module="c3charts-export-to-png"><a href="#">PNG</a></li>
+    <li><a href="#">PDF</a></li>
+  </ul>
 </div>
