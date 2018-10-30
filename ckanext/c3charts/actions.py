@@ -11,7 +11,7 @@ except ImportError:
 
 import ckan.logic as l
 
-from ckanext.datastore.db import (_get_engine, _get_fields_types, _PG_ERR_CODE, _get_unique_key)
+from ckanext.datastore.backend.postgres import (_get_engine_from_url, _get_fields_types, _PG_ERR_CODE, _get_unique_key)
 from sqlalchemy.exc import ProgrammingError, DBAPIError
 from collections import OrderedDict
 from datetime import datetime, date, time
@@ -39,8 +39,8 @@ def _format_results(types, results):
 
 def _search_sql(context, data_dict):
     # Setup DataStore connection with read-only user
-    data_dict['connection_url'] = config.get('ckan.datastore.read_url')
-    engine = _get_engine(data_dict)
+    connection_url = config.get('ckan.datastore.read_url')
+    engine = _get_engine_from_url(connection_url)
     context['connection'] = engine.connect()
 
     _types = _get_fields_types(context, data_dict)
